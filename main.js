@@ -10,7 +10,6 @@ function input_time(){
 
 function update_text() {
     var text = String(document.getElementById("timer-in").value)
-    console.log(text)
     if (text.length > 6){
         text = text.substring(text.length-6,text.length)
         document.getElementById("timer-in").value = text
