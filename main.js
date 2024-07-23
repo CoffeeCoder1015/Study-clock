@@ -2,6 +2,7 @@
 var hr = 0;
 var min = 0;
 var sec = 0;
+
 function input_time(){
     var input = document.getElementById("timer-in")
     input.focus()
@@ -25,6 +26,8 @@ function update_text() {
 }
 
 function recalculate() {
+    //reformats the time set in the timer when it is improper
+    //e.g 00:00:90 → 00:01:30
     min += Math.floor(sec/60) 
     sec %= 60
     hr += Math.floor(min/60)
