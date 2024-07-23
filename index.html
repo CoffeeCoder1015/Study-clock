@@ -1,7 +1,21 @@
 <!DOCTYPE HTML> 
 <html>
-	<head></head>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css" /></head>
+		<script src="main.js"></script>
 	<body>
-		<div id="timer"></div>
+		<div id="container">
+			<div id="timer" onclick="input_time()">
+				<div id="timer-disp">
+					<span id="hr">00</span>:
+					<span id="min">00</span>:
+					<span id="sec">00</span>
+				</div>
+				<input type="number" id="timer-in" autocomplete="off" onkeypress="update_text()" onchange="recalculate()">
+			</div>
+			<div id="controls">
+				<button id="start">Start!</button>
+			</div>
+		</div>
 	</body>
 </html>

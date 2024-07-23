@@ -1,0 +1,47 @@
+#start{
+    height: 100%;
+    width: 50%;
+    /* margin-top: 4vh;  */ /*left empty for now*/
+    margin-left: 25%;
+}
+
+#controls{
+
+}
+
+#container{
+    display: flexbox;
+    flex-direction: column;
+}
+
+#timer-disp{
+    text-align: center;
+    height: fit-content;
+    width: fit-content;
+}
+
+#timer-in{
+    opacity: 0;
+    width: 0;
+    height: 0;
+    z-index: -2;
+    position: absolute;
+    /* font-size: 14px; */
+}
+
+#timer{
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    align-content: center;
+    font-size: 300%;
+}
+
+body, html{
+    min-height: 100vh;
+    min-width: 1vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
