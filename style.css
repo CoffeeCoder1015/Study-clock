@@ -37,6 +37,10 @@
     font-size: 300%;
 }
 
+#timer:focus-within{
+    border-color: blue;
+}
+
 body, html{
     min-height: 100vh;
     min-width: 1vh;
