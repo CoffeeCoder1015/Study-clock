@@ -18,7 +18,7 @@ function update_text() {
     sec = Number(text.substring(4,6))
     min = Number(text.substring(2,4))
     hr = Number(text.substring(0,2))
-    var time =document.getElementById("timer-disp").children
+    var time =document.getElementById("btimer").children
     time.namedItem("hr").innerText = text.substring(0,2)
     time.namedItem("min").innerText = text.substring(2,4)
     time.namedItem("sec").innerText = text.substring(4,6)
@@ -31,7 +31,7 @@ function recalculate() {
     sec %= 60
     hr += parseInt( min/60 )
     min %= 60
-    var time =document.getElementById("timer-disp").children
+    var time =document.getElementById("btimer").children
     times = [hr,min,sec]
     times_padded = [] //in the format or hr, min, sec like the unpadded array above
     times.forEach(element => {
@@ -48,7 +48,7 @@ function recalculate() {
 
 function countdown(){
     var countdown_sec = sec+min*60+hr*3600;
-    var time =document.getElementById("timer-disp").children
+    var time =document.getElementById("btimer").children
     var x = setInterval(() => { //  x set here
         if (countdown_sec <= 0){
             time.namedItem("hr").innerText = "00"
