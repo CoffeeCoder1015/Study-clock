@@ -1,0 +1,34 @@
+@keyframes slidein {
+from {
+    translate: 0 -30vw;
+    opacity: 0%;
+}
+
+to {
+    translate: 0 0;
+    opacity: 100%;
+}
+}
+@keyframes slideout {
+from {
+    translate: 0 0;
+    opacity: 100%;
+}
+
+to {
+    translate: 0 30vw;
+    opacity: 0%;
+}
+}
+
+.slidein{
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+.slideout{
+    animation-duration: 3s;
+    animation-name: slideout;
+    animation-fill-mode: forwards;
+
+}

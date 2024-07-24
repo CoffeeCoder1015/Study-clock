@@ -2,25 +2,30 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css" /></head>
+		<link rel="stylesheet" type="text/css" href="phaseswitch.css" /></head>
 		<script src="main.js"></script>
 	<body>
 		<div id="container">
-			<div>Study</div>
+			<div class="slidein">
+				<div>Study</div>
 				<div class="timer" id="stimer_parent">
-				<div class="timer-disp" id="stimer">
-					<span id="hr">00</span>:
-					<span id="min">00</span>:
-					<span id="sec">00</span>
+					<div class="timer-disp" id="stimer">
+						<span id="hr">00</span>:
+						<span id="min">00</span>:
+						<span id="sec">00</span>
+					</div>
 				</div>
 			</div>
-			<div>Break</div>
-			<div class="timer" id="btimer_parent" onclick="input_time()">
-				<div class="timer-disp" id="btimer">
-					<span id="hr">00</span>:
-					<span id="min">00</span>:
-					<span id="sec">00</span>
+			<div class="slideout">
+				<div>Break</div>
+				<div class="timer" id="btimer_parent" onclick="input_time()">
+					<div class="timer-disp" id="btimer">
+						<span id="hr">00</span>:
+						<span id="min">00</span>:
+						<span id="sec">00</span>
+					</div>
+					<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text()" onkeydown="update_text()" onchange="recalculate()">
 				</div>
-				<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text()" onkeydown="update_text()" onchange="recalculate()">
 			</div>
 			<div id="controls">
 				<button id="start">Start!</button>
