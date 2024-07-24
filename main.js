@@ -27,9 +27,9 @@ function update_text() {
 function recalculate() {
     //reformats the time set in the timer when it is improper
     //e.g 00:00:90 → 00:01:30
-    min += Math.floor(sec/60) 
+    min += parseInt(sec/60)
     sec %= 60
-    hr += Math.floor(min/60)
+    hr += parseInt( min/60 )
     min %= 60
     var time =document.getElementById("timer-disp").children
     times = [hr,min,sec]
