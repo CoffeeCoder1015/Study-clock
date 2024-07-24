@@ -6,7 +6,7 @@
 	<body>
 		<div id="container">
 			<div>Study</div>
-			<div class="timer" id="stimer_parent" onclick="countup()">
+				<div class="timer" id="stimer_parent">
 				<div class="timer-disp" id="stimer">
 					<span id="hr">00</span>:
 					<span id="min">00</span>:
@@ -23,7 +23,7 @@
 				<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text()" onkeydown="update_text()" onchange="recalculate()">
 			</div>
 			<div id="controls">
-				<button id="start" onclick="countdown()">Start!</button>
+				<button id="start">Start!</button>
 			</div>
 		</div>
 	</body>
