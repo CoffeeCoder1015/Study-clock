@@ -1,4 +1,4 @@
-//time values inputted
+//time values inputted for countdown
 var hr = 0;
 var min = 0;
 var sec = 0;
@@ -44,4 +44,35 @@ function recalculate() {
     time.namedItem("hr").innerText = times_padded[0]
     time.namedItem("min").innerText = times_padded[1]
     time.namedItem("sec").innerText = times_padded[2]
+}
+
+function countdown(){
+    var countdown_sec = sec+min*60+hr*3600;
+    var time =document.getElementById("timer-disp").children
+    var x = setInterval(() => { //  x set here
+        if (countdown_sec <= 0){
+            time.namedItem("hr").innerText = "00"
+            time.namedItem("min").innerText = "00"
+            time.namedItem("sec").innerText = "00"
+            clearInterval(x) //terminates using variable x, why does this work i wished it didnt so a less cursed method can be used
+        }
+        var cd_hrs = parseInt(countdown_sec/3600)
+        var remaining_sec = countdown_sec%3600
+        var cd_min = parseInt(remaining_sec/60)
+        remaining_sec %= 60
+        times = [cd_hrs,cd_min,remaining_sec]
+        times_padded = [] //in the format or hr, min, sec like the unpadded array above
+        times.forEach(element => {
+        if (element < 10) {
+            times_padded.push("0" + element.toString())
+            return
+        }
+        times_padded.push(element.toString())
+        });
+        time.namedItem("hr").innerText = times_padded[0]
+        time.namedItem("min").innerText = times_padded[1]
+        time.namedItem("sec").innerText = times_padded[2]
+        remaining_sec %= 60
+        countdown_sec--
+    }, 1000);
 }
