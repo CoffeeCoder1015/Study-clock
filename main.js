@@ -76,3 +76,28 @@ function countdown(){
         countdown_sec--
     }, 1000);
 }
+
+function countup(){
+    var t_sec = 0;
+    var time =document.getElementById("stimer").children
+    var x = setInterval(() => { //  x set here
+        var cu_hrs = parseInt(t_sec/3600)
+        var remaining_sec = t_sec%3600
+        var cu_min = parseInt(remaining_sec/60)
+        remaining_sec %= 60
+        times = [cu_hrs,cu_min,remaining_sec]
+        times_padded = [] //in the format or hr, min, sec like the unpadded array above
+        times.forEach(element => {
+        if (element < 10) {
+            times_padded.push("0" + element.toString())
+            return
+        }
+        times_padded.push(element.toString())
+        });
+        time.namedItem("hr").innerText = times_padded[0]
+        time.namedItem("min").innerText = times_padded[1]
+        time.namedItem("sec").innerText = times_padded[2]
+        remaining_sec %= 60
+        t_sec++
+    }, 1000);
+}
