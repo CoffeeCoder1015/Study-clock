@@ -60,6 +60,17 @@ class Phase{
         this.stimer.classList.remove("homescreen_state")
         this.logical_stimer = this.countup()
     }
+    
+    end_session(){
+        clearInterval(this.logical_stimer)
+        this.logical_stimer = null
+        clearInterval(this.logical_btimer)
+        this.logical_btimer = null
+        this.btimer.classList.remove("slideout","slidein")
+        this.stimer.classList.remove("slideout","slidein","start_session")
+        this.stimer.classList.add("homescreen_state")
+        document.getElementById("container").style.flexDirection = "column"
+    }
 
     enter_break(){
         clearInterval(this.logical_stimer)
