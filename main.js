@@ -3,6 +3,10 @@ var hr = 0;
 var min = 0;
 var sec = 0;
 
+function set_title_text(text) {
+    document.getElementById("title").innerText = text
+}
+
 function input_time(){
     var input = document.getElementById("timer-in")
     input.focus()
@@ -80,6 +84,7 @@ class Phase{
         document.getElementById("end").style.display = "none"
         document.getElementById("break").style.display = "none"
         document.getElementById("study").style.display = "none"
+        set_title_text("Study timer")
     }
     
     enter_break(){
@@ -142,12 +147,13 @@ class Phase{
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
+            set_title_text("Break!🥳 "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             remaining_sec %= 60
             countdown_sec--
         }, 1000);
         return x
     }
-
+    
     countup(){
         if(this.logical_stimer != null){
             console.log("Already started")
@@ -164,15 +170,16 @@ class Phase{
             var times = [cu_hrs,cu_min,remaining_sec]
             var times_padded = [] //in the format or hr, min, sec like the unpadded array above
             times.forEach(element => {
-            if (element < 10) {
-                times_padded.push("0" + element.toString())
-                return
-            }
-            times_padded.push(element.toString())
+                if (element < 10) {
+                    times_padded.push("0" + element.toString())
+                    return
+                }
+                times_padded.push(element.toString())
             });
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
+            set_title_text("Study!📝 "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             remaining_sec %= 60
             t_sec++
         }, 1000);
