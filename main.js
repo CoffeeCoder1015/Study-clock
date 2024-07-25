@@ -119,6 +119,7 @@ class Phase{
 
     enter_break(){
         clearInterval(this.logical_stimer)
+        this.logical_stimer = null
         var time = this.stimer.children[1].children[0].children
         time.namedItem("hr").innerText = "00"
         time.namedItem("min").innerText = "00"
