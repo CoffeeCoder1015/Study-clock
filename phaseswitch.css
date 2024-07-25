@@ -1,6 +1,6 @@
 @keyframes slidein {
 from {
-    translate: 0 -30vw;
+    translate: 0 -30vh;
     opacity: 0%;
 }
 
@@ -16,7 +16,7 @@ from {
 }
 
 to {
-    translate: 0 30vw;
+    translate: 0 30vh;
     opacity: 0%;
 }
 }
