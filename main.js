@@ -129,7 +129,18 @@ class Phase{
         document.getElementById("container").style.flexDirection = "column-reverse"
         this.btimer.classList.remove("slideout")
         this.btimer.classList.add("slidein")
-        this.countdown()
+        this.logical_btimer = this.countdown()
+    }
+    
+    enter_study(){
+        clearInterval(this.logical_btimer)
+        this.logical_btimer = null
+        this.btimer.classList.remove("slidein")
+        this.btimer.classList.add("slideout")
+        document.getElementById("container").style.flexDirection = "column"
+        this.stimer.classList.remove("slideout")
+        this.stimer.classList.add("slidein")
+        this.logical_stimer = this.countup()
     }
 
     countdown(){
