@@ -56,7 +56,7 @@ class Phase{
         //on start up stuff
         document.getElementById("start").style.display = "unset"
     }
-
+    
     start_session(){
         this.btimer.classList.add("slideout")
         this.stimer.classList.add("start_session")
@@ -81,7 +81,7 @@ class Phase{
         document.getElementById("break").style.display = "none"
         document.getElementById("study").style.display = "none"
     }
-
+    
     enter_break(){
         clearInterval(this.logical_stimer)
         this.logical_stimer = null
@@ -111,8 +111,12 @@ class Phase{
         document.getElementById("break").style.display = "unset"
         document.getElementById("study").style.display = "none"
     }
-
+    
     countdown(){
+        if(this.logical_btimer != null){
+            console.log("Already started")
+            return this.logical_btimer
+        }
         var countdown_sec = sec+min*60+hr*3600;
         var time = this.btimer.children[1].children[0].children
         var x = setInterval(() => { //  x set here
@@ -145,6 +149,10 @@ class Phase{
     }
 
     countup(){
+        if(this.logical_stimer != null){
+            console.log("Already started")
+            return this.logical_stimer
+        }
         var t_sec = 0;
         var time = this.stimer.children[1].children[0].children
         // var time =document.getElementById("stimer").children
