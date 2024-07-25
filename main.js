@@ -52,6 +52,9 @@ class Phase{
         this.btimer = document.getElementById("btimer_parent")
         this.logical_stimer = null
         this.logical_btimer = null
+
+        //on start up stuff
+        document.getElementById("start").style.display = "unset"
     }
 
     start_session(){
@@ -59,6 +62,9 @@ class Phase{
         this.stimer.classList.add("start_session")
         this.stimer.classList.remove("homescreen_state")
         this.logical_stimer = this.countup()
+        document.getElementById("start").style.display = "none"
+        document.getElementById("break").style.display = "unset"
+        document.getElementById("end").style.display = "unset"
     }
     
     end_session(){
@@ -67,9 +73,13 @@ class Phase{
         clearInterval(this.logical_btimer)
         this.logical_btimer = null
         this.btimer.classList.remove("slideout","slidein")
-        this.stimer.classList.remove("slideout","slidein","start_session")
+        this.stimer.classList.remove("slideout","slidein")
         this.stimer.classList.add("homescreen_state")
         document.getElementById("container").style.flexDirection = "column"
+        document.getElementById("start").style.display = "unset"
+        document.getElementById("end").style.display = "none"
+        document.getElementById("break").style.display = "none"
+        document.getElementById("study").style.display = "none"
     }
 
     enter_break(){
@@ -85,6 +95,8 @@ class Phase{
         this.btimer.classList.remove("slideout")
         this.btimer.classList.add("slidein")
         this.logical_btimer = this.countdown()
+        document.getElementById("break").style.display = "none"
+        document.getElementById("study").style.display = "unset"
     }
     
     enter_study(){
@@ -96,6 +108,8 @@ class Phase{
         this.stimer.classList.remove("slideout")
         this.stimer.classList.add("slidein")
         this.logical_stimer = this.countup()
+        document.getElementById("break").style.display = "unset"
+        document.getElementById("study").style.display = "none"
     }
 
     countdown(){
