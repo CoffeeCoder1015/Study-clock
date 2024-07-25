@@ -114,8 +114,23 @@ class Phase{
         this.btimer.classList.add("slideout")
         this.stimer.classList.add("start_session")
         this.stimer.classList.remove("homescreen_state")
-        this.countup()
+        this.logical_stimer = this.countup()
     }
+
+    enter_break(){
+        clearInterval(this.logical_stimer)
+        var time = this.stimer.children[1].children[0].children
+        time.namedItem("hr").innerText = "00"
+        time.namedItem("min").innerText = "00"
+        time.namedItem("sec").innerText = "00"
+        this.stimer.classList.remove("start_session")
+        this.stimer.classList.add("slideout")
+        document.getElementById("container").style.flexDirection = "column-reverse"
+        this.btimer.classList.remove("slideout")
+        this.btimer.classList.add("slidein")
+    }
+
+
 
     countup(){
         var t_sec = 0;
