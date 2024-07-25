@@ -101,3 +101,46 @@ function countup(){
         t_sec++
     }, 1000);
 }
+
+class Phase{
+    constructor(){
+        this.stimer = document.getElementById("stimer_parent")
+        this.btimer = document.getElementById("btimer_parent")
+        this.logical_stimer = null
+        this.logical_btimer = null
+    }
+
+    start_session(){
+        this.btimer.classList.add("slideout")
+        this.stimer.classList.add("start_session")
+        this.stimer.classList.remove("homescreen_state")
+        this.countup()
+    }
+
+    countup(){
+        var t_sec = 0;
+        console.log(this.stimer)
+        var time = this.stimer.children[1].children[0].children
+        // var time =document.getElementById("stimer").children
+        return setInterval(() => { //  x set here
+            var cu_hrs = parseInt(t_sec/3600)
+            var remaining_sec = t_sec%3600
+            var cu_min = parseInt(remaining_sec/60)
+            remaining_sec %= 60
+            var times = [cu_hrs,cu_min,remaining_sec]
+            var times_padded = [] //in the format or hr, min, sec like the unpadded array above
+            times.forEach(element => {
+            if (element < 10) {
+                times_padded.push("0" + element.toString())
+                return
+            }
+            times_padded.push(element.toString())
+            });
+            time.namedItem("hr").innerText = times_padded[0]
+            time.namedItem("min").innerText = times_padded[1]
+            time.namedItem("sec").innerText = times_padded[2]
+            remaining_sec %= 60
+            t_sec++
+        }, 1000);
+    }
+}

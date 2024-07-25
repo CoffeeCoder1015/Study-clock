@@ -3,33 +3,39 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="style.css" /></head>
 		<link rel="stylesheet" type="text/css" href="phaseswitch.css" /></head>
+		<link rel="stylesheet" type="text/css" href="session.css" /></head>
 		<script src="main.js"></script>
 	<body>
-		<div id="container">
-			<div id="stimer_parent" class="">
-				<div>Study</div>
-				<div class="timer homescreen_state">
-					<div class="timer-disp" id="stimer">
-						<span id="hr">00</span>:
-						<span id="min">00</span>:
-						<span id="sec">00</span>
+		<div>
+			<div id="container">
+				<div id="stimer_parent" class="homescreen_state">
+					<div>Study</div>
+					<div class="timer">
+						<div class="timer-disp" id="stimer">
+							<span id="hr">00</span>:
+							<span id="min">00</span>:
+							<span id="sec">00</span>
+						</div>
 					</div>
 				</div>
-			</div>
 			<div id="btimer_parent" class="">
-				<div>Break</div>
-				<div class="timer" onclick="input_time()">
-					<div class="timer-disp" id="btimer">
-						<span id="hr">00</span>:
-						<span id="min">00</span>:
-						<span id="sec">00</span>
+					<div>Break</div>
+					<div class="timer" onclick="input_time()">
+						<div class="timer-disp" id="btimer">
+							<span id="hr">00</span>:
+							<span id="min">00</span>:
+							<span id="sec">00</span>
+						</div>
+						<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text()" onkeydown="update_text()" onchange="recalculate()">
 					</div>
-					<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text()" onkeydown="update_text()" onchange="recalculate()">
 				</div>
 			</div>
 			<div id="controls">
-				<button id="start">Start!</button>
+				<button id="start" onclick="p.start_session()">Start!</button>
 			</div>
 		</div>
 	</body>
+	<script>
+		var p = new Phase() //start phase manager after all display elements have been ran through the dom
+	</script>
 </html>
