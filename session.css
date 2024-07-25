@@ -1,0 +1,15 @@
+@keyframes start_session {
+from {
+    translate: 0 0;
+}
+
+to {
+    translate: 0 5vh;
+}
+}
+
+.start_session{
+    animation-duration: 3s;
+    animation-name: start_session;
+    animation-fill-mode: forwards;
+}
