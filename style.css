@@ -41,7 +41,7 @@
 .timer{
     border-radius: 5px;
     border-style: solid;
-    border-color: black;
+    border-color: rgb(255, 255, 255);
     align-content: center;
     font-size: 300%;
 }
@@ -51,6 +51,8 @@
 }
 
 body, html{
+    color: white;
+    background-color: rgb(16, 19, 22);
     min-height: 100vh;
     min-width: 1vh;
     display: flex;
