@@ -2,7 +2,8 @@
     margin-bottom: 5vh;
 }
 
-#start{
+.control_btn{
+    display: none;
     height: 100%;
     width: 50%;
     margin-left: 25%;
@@ -15,6 +16,11 @@
 #container{
     display: flex;
     flex-direction: column;
+}
+
+#container > *{
+    /* probably should replace this with a js class so the margin can be removed when one of the timers is hidden */
+    /* margin-bottom: 5vh; */
 }
 
 .timer-disp{
