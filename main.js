@@ -134,7 +134,6 @@ class Phase{
 
     countup(){
         var t_sec = 0;
-        console.log(this.stimer)
         var time = this.stimer.children[1].children[0].children
         // var time =document.getElementById("stimer").children
         return setInterval(() => { //  x set here
