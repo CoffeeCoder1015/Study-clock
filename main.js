@@ -179,7 +179,7 @@ class Phase{
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
-            set_title_text("Study!📝 "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
+            set_title_text("Study!📝"+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             remaining_sec %= 60
             t_sec++
         }, 1000);
