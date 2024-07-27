@@ -71,6 +71,17 @@ class Phase{
         document.getElementById("start").style.display = "unset"
     }
 
+    check_if_no_time_set(){
+        if(hr + min + sec == 0){
+            const btimer_wrapper = this.btimer.children[1];
+            btimer_wrapper.classList.remove( "no_time_set" )
+            void btimer_wrapper.offsetWidth //some css magic from https://css-tricks.com/restart-css-animation/  
+            btimer_wrapper.classList.add( "no_time_set" )
+            return false
+        }
+        return true
+    }
+
     play_alarm(){
         var pt = 0;
         this.alarm_player= setInterval(() => {
@@ -126,6 +137,11 @@ class Phase{
     }
 
     start_session(){
+        //start phase checks
+        if ( !this.check_if_no_time_set() ){
+            return
+        }
+        //standard start session 
         this.state = this.study
         this.btimer.className = "start_session_b"
         this.stimer.className = "start_session"
@@ -169,6 +185,10 @@ class Phase{
     }
     
     enter_study(){
+        //start phase checks
+        if ( !this.check_if_no_time_set() ){
+            return
+        }
         this.stop_alarm()
         this.state = this.study
         clearInterval(this.logical_btimer)

@@ -1,3 +1,22 @@
+.no_time_set{
+    animation-name:flash;
+    animation-duration: 0.5s;
+    animation-iteration-count: 6;
+    animation-direction: alternate;
+}
+
+@keyframes flash {
+    from{
+        border-color: rgb(245, 154, 154);
+    }
+    
+    to{
+        border-color: rgb(245, 45, 45);
+    }
+    
+}
+
+
 #link_to_repo{
     position: absolute;
     bottom: 0;
