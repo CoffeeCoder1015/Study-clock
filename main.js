@@ -3,6 +3,19 @@ var hr = 0;
 var min = 0;
 var sec = 0;
 
+function pad_time(hr,min,sec) {
+    times = [hr,min,sec]
+    times_padded = [] //in the format or hr, min, sec like the unpadded array above
+    times.forEach(element => {
+       if (element < 10) {
+           times_padded.push("0" + element.toString())
+           return
+       }
+       times_padded.push(element.toString())
+    });
+    return times_padded
+}
+
 function set_title_text(text) {
     document.getElementById("title").innerText = text
 }
@@ -36,15 +49,7 @@ function recalculate() {
     hr += parseInt( min/60 )
     min %= 60
     var time =document.getElementById("btimer").children
-    times = [hr,min,sec]
-    times_padded = [] //in the format or hr, min, sec like the unpadded array above
-    times.forEach(element => {
-       if (element < 10) {
-           times_padded.push("0" + element.toString())
-           return
-       }
-       times_padded.push(element.toString())
-    });
+    var times_padded = pad_time(hr,min,sec)
     time.namedItem("hr").innerText = times_padded[0]
     time.namedItem("min").innerText = times_padded[1]
     time.namedItem("sec").innerText = times_padded[2]
@@ -135,15 +140,7 @@ class Phase{
             var remaining_sec = countdown_sec%3600
             var cd_min = parseInt(remaining_sec/60)
             remaining_sec %= 60
-            var times = [cd_hrs,cd_min,remaining_sec]
-            var times_padded = [] //in the format or hr, min, sec like the unpadded array above
-            times.forEach(element => {
-            if (element < 10) {
-                times_padded.push("0" + element.toString())
-                return
-            }
-            times_padded.push(element.toString())
-        });
+            var times_padded = pad_time(cd_hrs,cd_min,remaining_sec)
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
@@ -167,15 +164,7 @@ class Phase{
             var remaining_sec = t_sec%3600
             var cu_min = parseInt(remaining_sec/60)
             remaining_sec %= 60
-            var times = [cu_hrs,cu_min,remaining_sec]
-            var times_padded = [] //in the format or hr, min, sec like the unpadded array above
-            times.forEach(element => {
-                if (element < 10) {
-                    times_padded.push("0" + element.toString())
-                    return
-                }
-                times_padded.push(element.toString())
-            });
+            var times_padded = pad_time(cu_hrs,cu_min,remaining_sec)
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
