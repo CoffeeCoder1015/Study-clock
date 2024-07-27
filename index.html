@@ -28,8 +28,8 @@
 							<span id="min">00</span>:
 							<span id="sec">00</span>
 						</div>
-						<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text(this,event)" onkeydown="update_text(this,event)" onchange="recalculate()"
-						onfocusout="clear_input(this)" >
+						<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text(this,event)" onkeydown="update_text(this,event)" onchange="p.recalculate()"
+						onfocusout="p.auto_restart(this);clear_input(this)" >
 					</div>
 				</div>
 			</div>

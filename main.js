@@ -45,19 +45,6 @@ function clear_input(t) {
     t.value = "" 
 }
 
-function recalculate() {
-    //reformats the time set in the timer when it is improper
-    //e.g 00:00:90 → 00:01:30
-    min += parseInt(sec/60)
-    sec %= 60
-    hr += parseInt( min/60 )
-    min %= 60
-    var time =document.getElementById("btimer").children
-    var times_padded = pad_time(hr,min,sec)
-    time.namedItem("hr").innerText = times_padded[0]
-    time.namedItem("min").innerText = times_padded[1]
-    time.namedItem("sec").innerText = times_padded[2]
-}
 
 class Phase{
     constructor(){
@@ -65,11 +52,38 @@ class Phase{
         this.btimer = document.getElementById("btimer_parent")
         this.logical_stimer = null
         this.logical_btimer = null
-
+        //states the web app can be in 
+        this.homescreen = 0
+        this.study = 1
+        this.break = 1
+        //start with homescreeen state
+        this.state = this.homescreen
+        
         //on start up stuff
         document.getElementById("start").style.display = "unset"
     }
+
+    auto_restart(t){
+        if(this.state == this.break && t.value != ""){
+            this.logical_btimer = this.countdown()
+        }
+    }
     
+    recalculate() {
+        this.reset_timer(this.btimer,this.logical_btimer)
+        //reformats the time set in the timer when it is improper
+        //e.g 00:00:90 → 00:01:30
+        min += parseInt(sec/60)
+        sec %= 60
+        hr += parseInt( min/60 )
+        min %= 60
+        var time =document.getElementById("btimer").children
+        var times_padded = pad_time(hr,min,sec)
+        time.namedItem("hr").innerText = times_padded[0]
+        time.namedItem("min").innerText = times_padded[1]
+        time.namedItem("sec").innerText = times_padded[2]
+    }
+
     reset_timer(disp_timer,log_timer){
         //resets the displayed timer and the logical timer
         clearInterval(log_timer)
@@ -85,6 +99,7 @@ class Phase{
     }
 
     start_session(){
+        this.state = this.study
         this.btimer.className = "start_session_b"
         this.stimer.className = "start_session"
         this.logical_stimer = this.countup()
@@ -94,6 +109,7 @@ class Phase{
     }
     
     end_session(){
+        this.state = this.homescreen
         this.reset_timer(this.stimer,this.logical_stimer)
         this.reset_timer(this.btimer,this.logical_btimer)
         this.recalculate()
@@ -108,6 +124,7 @@ class Phase{
     }
     
     enter_break(){
+        this.state = this.break
         clearInterval(this.logical_stimer)
         this.logical_stimer = null
         var time = this.stimer.children[1].children[0].children
@@ -123,6 +140,7 @@ class Phase{
     }
     
     enter_study(){
+        this.state = this.study
         clearInterval(this.logical_btimer)
         this.recalculate()
         this.logical_btimer = null
@@ -150,9 +168,11 @@ class Phase{
             var cd_min = parseInt(remaining_sec/60)
             remaining_sec %= 60
             var times_padded = pad_time(cd_hrs,cd_min,remaining_sec)
-            time.namedItem("hr").innerText = times_padded[0]
-            time.namedItem("min").innerText = times_padded[1]
-            time.namedItem("sec").innerText = times_padded[2]
+            if(this.btimer.children[1].children[1] != document.activeElement){
+                time.namedItem("hr").innerText = times_padded[0]
+                time.namedItem("min").innerText = times_padded[1]
+                time.namedItem("sec").innerText = times_padded[2]
+            }
             set_title_text("Break!🥳 "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             remaining_sec %= 60
             countdown_sec--
