@@ -74,13 +74,16 @@
     border-color: rgb(255, 194, 27)
 }
 
-body, html{
-    color: white;
-    background-color: rgb(16, 19, 22);
-    min-height: 100vh;
-    min-width: 1vh;
+#main{
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     justify-content: center;
     align-items: center;
+}
+
+body, html{
+    color: white;
     overflow: hidden;
+    background-color: rgb(16, 19, 22);
 }

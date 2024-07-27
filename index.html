@@ -9,36 +9,38 @@
 		<link rel="stylesheet" type="text/css" href="controls.css" /></head>
 		<script src="main.js"></script>
 	<body>
-		<div>
-			<div id="container">
-				<div id="stimer_parent" class="homescreen_state">
-					<div class="timer_name">Study 📝</div>
-					<div class="timer">
-						<div class="timer-disp" id="stimer">
-							<span id="hr">00</span>:
-							<span id="min">00</span>:
-							<span id="sec">00</span>
+		<div id="main">
+			<div>
+				<div id="container">
+					<div id="stimer_parent" class="homescreen_state">
+						<div class="timer_name">Study 📝</div>
+						<div class="timer">
+							<div class="timer-disp" id="stimer">
+								<span id="hr">00</span>:
+								<span id="min">00</span>:
+								<span id="sec">00</span>
+							</div>
+						</div>
+					</div>
+					<div id="btimer_parent" class="">
+						<div class="timer_name">Break 🥳</div>
+						<div class="timer" onclick="input_time()">
+							<div class="timer-disp" id="btimer">
+								<span id="hr">00</span>:
+								<span id="min">00</span>:
+								<span id="sec">00</span>
+							</div>
+							<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text(this,event)" onkeydown="update_text(this,event)" onchange="p.recalculate()"
+							onfocusout="p.auto_restart(this);clear_input(this)" >
 						</div>
 					</div>
 				</div>
-			<div id="btimer_parent" class="">
-					<div class="timer_name">Break 🥳</div>
-					<div class="timer" onclick="input_time()">
-						<div class="timer-disp" id="btimer">
-							<span id="hr">00</span>:
-							<span id="min">00</span>:
-							<span id="sec">00</span>
-						</div>
-						<input type="number" id="timer-in" autocomplete="off" onkeyup="update_text(this,event)" onkeydown="update_text(this,event)" onchange="p.recalculate()"
-						onfocusout="p.auto_restart(this);clear_input(this)" >
-					</div>
+				<div id="controls">
+					<button id="start" class="control_btn"  onclick="p.start_session()">Start!</button>
+					<button id="break" class="control_btn" onclick="p.enter_break()">Break 🥳</button>
+					<button id="study" class="control_btn" onclick="p.enter_study()">Study 📝</button>
+					<button id="end" class="control_btn" onclick="p.end_session()">End!</button>
 				</div>
-			</div>
-			<div id="controls">
-				<button id="start" class="control_btn"  onclick="p.start_session()">Start!</button>
-				<button id="break" class="control_btn" onclick="p.enter_break()">Break 🥳</button>
-				<button id="study" class="control_btn" onclick="p.enter_study()">Study 📝</button>
-				<button id="end" class="control_btn" onclick="p.end_session()">End!</button>
 			</div>
 		</div>
 		<a href="https://github.com/CoffeeCoder1015/Study-clock" target="_blank">
