@@ -95,6 +95,8 @@ class Phase{
     
     end_session(){
         this.reset_timer(this.stimer,this.logical_stimer)
+        this.reset_timer(this.btimer,this.logical_btimer)
+        this.recalculate()
         this.btimer.className = ""
         this.stimer.className = "homescreen_state"
         document.getElementById("container").style.flexDirection = "column"
@@ -122,6 +124,7 @@ class Phase{
     
     enter_study(){
         clearInterval(this.logical_btimer)
+        this.recalculate()
         this.logical_btimer = null
         this.btimer.className = "slideout"
         document.getElementById("container").style.flexDirection = "column"
