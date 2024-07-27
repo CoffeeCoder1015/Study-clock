@@ -81,9 +81,8 @@ class Phase{
     }
 
     start_session(){
-        this.btimer.classList.add("start_session_b")
-        this.stimer.classList.add("start_session")
-        this.stimer.classList.remove("homescreen_state")
+        this.btimer.className = "start_session_b"
+        this.stimer.className = "start_session"
         this.logical_stimer = this.countup()
         document.getElementById("start").style.display = "none"
         document.getElementById("break").style.display = "unset"
@@ -92,9 +91,8 @@ class Phase{
     
     end_session(){
         this.reset_timer(this.stimer,this.logical_stimer)
-        this.btimer.classList.remove("slideout","slidein","start_session_b")
-        this.stimer.classList.remove("slideout","slidein","start_session")
-        this.stimer.classList.add("homescreen_state")
+        this.btimer.className = ""
+        this.stimer.className = "homescreen_state"
         document.getElementById("container").style.flexDirection = "column"
         document.getElementById("start").style.display = "unset"
         document.getElementById("end").style.display = "none"
@@ -110,11 +108,9 @@ class Phase{
         time.namedItem("hr").innerText = "00"
         time.namedItem("min").innerText = "00"
         time.namedItem("sec").innerText = "00"
-        this.stimer.classList.remove("start_session")
-        this.stimer.classList.add("slideout")
+        this.stimer.className = "slideout"
         document.getElementById("container").style.flexDirection = "column-reverse"
-        this.btimer.classList.remove("start_session_b")
-        this.btimer.classList.add("slidein")
+        this.btimer.className = "slidein"
         this.logical_btimer = this.countdown()
         document.getElementById("break").style.display = "none"
         document.getElementById("study").style.display = "unset"
@@ -123,11 +119,9 @@ class Phase{
     enter_study(){
         clearInterval(this.logical_btimer)
         this.logical_btimer = null
-        this.btimer.classList.remove("slidein")
-        this.btimer.classList.add("slideout")
+        this.btimer.className = "slideout"
         document.getElementById("container").style.flexDirection = "column"
-        this.stimer.classList.remove("slideout")
-        this.stimer.classList.add("slidein")
+        this.stimer.className = "slidein"
         this.logical_stimer = this.countup()
         document.getElementById("break").style.display = "unset"
         document.getElementById("study").style.display = "none"
