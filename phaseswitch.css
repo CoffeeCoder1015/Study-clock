@@ -11,7 +11,7 @@ to {
 }
 @keyframes slideout {
 from {
-    translate: 0 5vh;
+    translate: 0 -10vh;
     opacity: 100%;
     height: 100%;
 }

@@ -13,3 +13,23 @@ to {
     animation-name: start_session;
     animation-fill-mode: forwards;
 }
+
+@keyframes start_session_b { /*start session animation for the break timer*/
+from {
+    translate: 0 5vh;
+    opacity: 100%;
+    height: 100%;
+}
+
+to {
+    translate: 0 30vh;
+    opacity: 0%;
+    height: 0%;
+}
+}
+
+.start_session_b{
+    animation-duration: 3s;
+    animation-name: start_session_b;
+    animation-fill-mode: forwards;
+}

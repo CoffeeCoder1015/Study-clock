@@ -62,7 +62,7 @@ class Phase{
     }
     
     start_session(){
-        this.btimer.classList.add("slideout")
+        this.btimer.classList.add("start_session_b")
         this.stimer.classList.add("start_session")
         this.stimer.classList.remove("homescreen_state")
         this.logical_stimer = this.countup()
@@ -76,9 +76,8 @@ class Phase{
         this.logical_stimer = null
         clearInterval(this.logical_btimer)
         this.logical_btimer = null
-        this.stimer.classList.remove("start_session")
-        this.btimer.classList.remove("slideout","slidein")
-        this.stimer.classList.remove("slideout","slidein")
+        this.btimer.classList.remove("slideout","slidein","start_session_b")
+        this.stimer.classList.remove("slideout","slidein","start_session")
         this.stimer.classList.add("homescreen_state")
         document.getElementById("container").style.flexDirection = "column"
         document.getElementById("start").style.display = "unset"
@@ -98,7 +97,7 @@ class Phase{
         this.stimer.classList.remove("start_session")
         this.stimer.classList.add("slideout")
         document.getElementById("container").style.flexDirection = "column-reverse"
-        this.btimer.classList.remove("slideout")
+        this.btimer.classList.remove("start_session_b")
         this.btimer.classList.add("slidein")
         this.logical_btimer = this.countdown()
         document.getElementById("break").style.display = "none"
@@ -144,7 +143,7 @@ class Phase{
                 return
             }
             times_padded.push(element.toString())
-            });
+        });
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
