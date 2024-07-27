@@ -76,6 +76,7 @@ class Phase{
         this.logical_stimer = null
         clearInterval(this.logical_btimer)
         this.logical_btimer = null
+        this.stimer.classList.remove("start_session")
         this.btimer.classList.remove("slideout","slidein")
         this.stimer.classList.remove("slideout","slidein")
         this.stimer.classList.add("homescreen_state")
