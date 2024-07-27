@@ -36,11 +36,11 @@
     border-style: solid;
     border-color: rgb(255, 255, 255);
     align-content: center;
-    font-size: 300%;
+    font-size: 500%;
 }
 
 .timer:focus-within{
-    border-color: blue;
+    border-color: rgb(255, 194, 27)
 }
 
 body, html{
