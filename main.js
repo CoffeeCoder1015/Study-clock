@@ -59,8 +59,32 @@ class Phase{
         //start with homescreeen state
         this.state = this.homescreen
         
+        //alarm
+        this.alarm = new Audio('alarm.wav');
+        this.alarm_player = null;
+        this.loop_alarm_times = 5;
+
         //on start up stuff
         document.getElementById("start").style.display = "unset"
+    }
+
+    play_alarm(){
+        var pt = 0;
+        this.alarm_player= setInterval(() => {
+                if(pt > this.loop_alarm_times-2){ //idk why it needs to be offset by 2
+                    clearInterval(this.alarm_player)
+                }
+                this.alarm.play()
+                this.alarm.currentTime = 0
+                console.log("x")
+                pt++
+        }, this.alarm.duration*1000+10);
+    }
+
+    stop_alarm(){
+        this.alarm.pause()
+        clearInterval(this.alarm_player)
+        this.alarm.currentTime = 0
     }
 
     auto_restart(t){
@@ -110,6 +134,7 @@ class Phase{
     
     end_session(){
         this.state = this.homescreen
+        this.stop_alarm()
         this.reset_timer(this.stimer,this.logical_stimer)
         this.reset_timer(this.btimer,this.logical_btimer)
         this.recalculate()
@@ -140,6 +165,7 @@ class Phase{
     }
     
     enter_study(){
+        this.stop_alarm()
         this.state = this.study
         clearInterval(this.logical_btimer)
         this.recalculate()
@@ -162,6 +188,7 @@ class Phase{
         var x = setInterval(() => { //  x set here
             if (countdown_sec <= 0){
                 this.reset_timer(this.btimer,x)
+                this.play_alarm()
             }
             var cd_hrs = parseInt(countdown_sec/3600)
             var remaining_sec = countdown_sec%3600
