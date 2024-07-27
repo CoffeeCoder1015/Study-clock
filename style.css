@@ -1,3 +1,34 @@
+#link_to_repo{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 2vh;
+    margin-bottom: 2vh;
+}
+
+#link_to_repo:hover{
+    /* filter: blur(0.5px); */
+    /* background-color: rgb(255, 194, 27);
+    border-radius: 50%;
+    box-shadow: rgb(255, 194, 27) 0 0 6px 1px; */
+    animation-name: slowglow;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    border-radius: 50%;
+    background-color: rgb(255, 194, 27);
+    animation-direction: alternate;
+}
+
+@keyframes slowglow {
+   from{
+        box-shadow: rgb(255, 194, 27) 0 0 1px 1px;
+   } 
+
+   to{
+        box-shadow: rgb(255, 194, 27) 0 0 6px 1px;
+   }
+}
+
 .timer_name{
     font-size: 200%;
 }
