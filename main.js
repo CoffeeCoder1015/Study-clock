@@ -149,6 +149,7 @@ class Phase{
         document.getElementById("break").style.display = "none"
         document.getElementById("study").style.display = "none"
         set_title_text("Study timer")
+        set_new_favico("⏳")
     }
     
     enter_break(){
