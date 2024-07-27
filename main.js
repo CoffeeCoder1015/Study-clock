@@ -16,6 +16,9 @@ function pad_time(hr,min,sec) {
     return times_padded
 }
 
+function set_new_favico(emoji) {
+    document.getElementById("favico").href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`
+}
 function set_title_text(text) {
     document.getElementById("title").innerText = text
 }
@@ -200,7 +203,8 @@ class Phase{
                 time.namedItem("min").innerText = times_padded[1]
                 time.namedItem("sec").innerText = times_padded[2]
             }
-            set_title_text("Break!🥳 "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
+            set_title_text("Break!  "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
+            set_new_favico("🥳")
             remaining_sec %= 60
             countdown_sec--
         }, 1000);
@@ -224,7 +228,8 @@ class Phase{
             time.namedItem("hr").innerText = times_padded[0]
             time.namedItem("min").innerText = times_padded[1]
             time.namedItem("sec").innerText = times_padded[2]
-            set_title_text("Study!📝"+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
+            set_title_text("Study!  "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
+            set_new_favico("📝")
             remaining_sec %= 60
             t_sec++
         }, 1000);
