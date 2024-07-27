@@ -25,11 +25,11 @@ function input_time(){
     input.focus()
 }
 
-function update_text() {
-    var text = String(document.getElementById("timer-in").value)
+function update_text(t,e) {
+    var text = String(t.value)
     if (text.length > 6){
         text = text.substring(text.length-6,text.length)
-        document.getElementById("timer-in").value = text
+        t.value = text
     }
     text = String("0").repeat(6-text.length) + text 
     sec = Number(text.substring(4,6))
@@ -39,6 +39,10 @@ function update_text() {
     time.namedItem("hr").innerText = text.substring(0,2)
     time.namedItem("min").innerText = text.substring(2,4)
     time.namedItem("sec").innerText = text.substring(4,6)
+}
+
+function clear_input(t) {
+    t.value = "" 
 }
 
 function recalculate() {
