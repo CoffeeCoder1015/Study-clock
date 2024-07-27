@@ -66,6 +66,20 @@ class Phase{
         document.getElementById("start").style.display = "unset"
     }
     
+    reset_timer(disp_timer,log_timer){
+        //resets the displayed timer and the logical timer
+        clearInterval(log_timer)
+        if(log_timer == this.logical_stimer){
+            this.logical_stimer = null
+        }else{
+            this.logical_btimer = null
+        }
+        var time = disp_timer.children[1].children[0].children
+        time.namedItem("hr").innerText = "00"
+        time.namedItem("min").innerText = "00"
+        time.namedItem("sec").innerText = "00"
+    }
+
     start_session(){
         this.btimer.classList.add("start_session_b")
         this.stimer.classList.add("start_session")
@@ -77,10 +91,7 @@ class Phase{
     }
     
     end_session(){
-        clearInterval(this.logical_stimer)
-        this.logical_stimer = null
-        clearInterval(this.logical_btimer)
-        this.logical_btimer = null
+        this.reset_timer(this.stimer,this.logical_stimer)
         this.btimer.classList.remove("slideout","slidein","start_session_b")
         this.stimer.classList.remove("slideout","slidein","start_session")
         this.stimer.classList.add("homescreen_state")
@@ -131,10 +142,7 @@ class Phase{
         var time = this.btimer.children[1].children[0].children
         var x = setInterval(() => { //  x set here
             if (countdown_sec <= 0){
-                time.namedItem("hr").innerText = "00"
-                time.namedItem("min").innerText = "00"
-                time.namedItem("sec").innerText = "00"
-                clearInterval(x) //terminates using variable x, why does this work i wished it didnt so a less cursed method can be used
+                this.reset_timer(this.btimer,x)
             }
             var cd_hrs = parseInt(countdown_sec/3600)
             var remaining_sec = countdown_sec%3600
