@@ -1,4 +1,4 @@
-# Work in progress 🏗️ -  Study Clock
+# Study Clock
 
 Timer to help track effective studying time and break time.
 
