@@ -23,20 +23,6 @@
     cursor: pointer;
 }
 
-/* .control_btn::before{
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: 2%;
-    left:25%;
-    background-size: 250%;
-    z-index: -1;
-    filter: blur(6px);
-    animation: glowing 20s linear infinite;
-    width: 50%;
-    height: 25%;
-    border-radius: 30px;
-} */
 .control_btn:hover{
     border-color:rgb(255, 194, 27) ;
 }
@@ -49,4 +35,19 @@
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
+}
+
+#background{
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: 4.5px;
+    left:9.5vh;
+    background-size: 250%;
+    z-index: -1;
+    filter: blur(6px);
+    animation: glowing 20s linear infinite;
+    width: 50%;
+    height: 25%;
+    border-radius: 30px;
 }
