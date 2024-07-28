@@ -31,6 +31,10 @@ function input_time(){
 
 function update_text(t,e) {
     var text = String(t.value)
+    if(e.code == "Backspace" && text == ""){
+        text = "0"
+        t.value = text
+    }
     if(e.code == "Escape"){
         text = break_time_cache_str
         t.value = break_time_cache_str
@@ -108,6 +112,7 @@ class Phase{
 
     auto_restart(t){
         if(this.state == this.break && t.value != ""){
+            clearInterval(this.logical_btimer)
             this.stop_alarm()
             this.logical_btimer = this.countdown()
         }
