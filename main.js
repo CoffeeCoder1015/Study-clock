@@ -96,7 +96,6 @@ class Phase{
                 }
                 this.alarm.play()
                 this.alarm.currentTime = 0
-                console.log("x")
                 pt++
         }, this.alarm.duration*1000+10);
     }
@@ -109,6 +108,7 @@ class Phase{
 
     auto_restart(t){
         if(this.state == this.break && t.value != ""){
+            this.stop_alarm()
             this.logical_btimer = this.countdown()
         }
     }
