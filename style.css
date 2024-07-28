@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Wellfleet&display=swap');
 .no_time_set{
     animation-name:flash;
     animation-duration: 0.5s;
@@ -101,7 +102,12 @@
     align-items: center;
 }
 
+body,html,button{
+    font-family: "Wellfleet", monospace;
+}
+
 body, html{
+    font-style: normal;
     color: white;
     overflow: hidden;
     background-color: rgb(16, 19, 22);
