@@ -1,4 +1,5 @@
 //time values inputted for countdown
+var break_time_cache_str = "";
 var hr = 0;
 var min = 0;
 var sec = 0;
@@ -30,6 +31,10 @@ function input_time(){
 
 function update_text(t,e) {
     var text = String(t.value)
+    if(e.code == "Escape"){
+        text = break_time_cache_str
+        t.value = break_time_cache_str
+    }
     if (text.length > 6){
         text = text.substring(text.length-6,text.length)
         t.value = text
@@ -45,6 +50,7 @@ function update_text(t,e) {
 }
 
 function clear_input(t) {
+    break_time_cache_str = t.value
     t.value = "" 
 }
 
