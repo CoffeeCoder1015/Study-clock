@@ -7,9 +7,14 @@
 		<link rel="stylesheet" type="text/css" href="phaseswitch.css" /></head>
 		<link rel="stylesheet" type="text/css" href="session.css" /></head>
 		<link rel="stylesheet" type="text/css" href="controls.css" /></head>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="main.js"></script>
+		<script src="stats.js"></script>
 	<body>
 		<div id="main">
+			<div style="width: 500px;">
+				<canvas id="test"></canvas>
+			</div>
 			<div>
 				<div id="container">
 					<div id="stimer_parent" class="homescreen_state">
@@ -50,6 +55,7 @@
 		</a>
 	</body>
 	<script>
-		var p = new Phase() //start phase manager after all display elements have been ran through the dom
+		var sm = new StatsDisplay("test")
+		var p = new Phase(sm) //start phase manager after all display elements have been ran through the dom
 	</script>
 </html>

@@ -60,7 +60,7 @@ function clear_input(t) {
 
 
 class Phase{
-    constructor(){
+    constructor(statistics_manager){
         this.stimer = document.getElementById("stimer_parent")
         this.btimer = document.getElementById("btimer_parent")
         this.logical_stimer = null
@@ -79,6 +79,9 @@ class Phase{
 
         //on start up stuff
         document.getElementById("start").style.display = "unset"
+
+        //stats
+        this.sm = statistics_manager
     }
 
     check_if_no_time_set(){
@@ -237,6 +240,7 @@ class Phase{
             }
             set_title_text("Break!  "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             set_new_favico("🥳")
+            this.sm.increment("b")
             remaining_sec %= 60
             countdown_sec--
         }, 1000);
@@ -262,6 +266,7 @@ class Phase{
             time.namedItem("sec").innerText = times_padded[2]
             set_title_text("Study!  "+times_padded[0]+":"+times_padded[1]+":"+times_padded[2])
             set_new_favico("📝")
+            this.sm.increment("s")
             remaining_sec %= 60
             t_sec++
         }, 1000);
