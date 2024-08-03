@@ -1,9 +1,11 @@
 class StatsDisplay {
-    constructor(chart_canvas) {
+    constructor(chart) {
+        this.stats_wrapper = document.getElementById("stats_wrapper")
+        this.chart_wrapper = chart
         this.break_time = new Array(24).fill(0) //all in seconds
         this.study_time = new Array(24).fill(0) //all in seconds
         this.chart = new Chart(
-            chart_canvas,
+            chart.children[0],
             {
                 type: 'bar',
                 data: {
@@ -26,6 +28,8 @@ class StatsDisplay {
                     ]
                 },
                 options: {
+                    maintainAspectRatio:false,
+                    responsive:true,
                     scales: {
                         x: {
                             stacked: true,
@@ -88,5 +92,31 @@ class StatsDisplay {
             this.chart.data.datasets[0].data[index] = this.study_time[index]/60
         }
         this.chart.update()
+    }
+
+    showElement(element){
+        element.classList.remove("hide_stats")
+        element.classList.add("show_stats")
+    }
+    hideElement(element){
+        element.classList.remove("show_stats")
+        element.classList.add("hide_stats")
+    }
+    showChart(element){
+        this.stats_wrapper.style.animationDuration = "3s, 3s, 3s"
+        this.stats_wrapper.style.animationFillMode = 'forwards'
+        this.stats_wrapper.style.animationName = "stats_display_show, width_expand, margin_expand"
+        this.chart_wrapper.className = "show_stats"
+        this.hideElement(element)
+        this.showElement(document.getElementById("hide"))
+    }
+    
+    hideChart(element){
+        this.stats_wrapper.style.animationDuration = "3s, 3s, 3s"
+        this.stats_wrapper.style.animationFillMode = 'forwards'
+        this.stats_wrapper.style.animationName = "stats_display_hide, width_retract, margin_retract"
+        this.chart_wrapper.className = "hide_stats"
+        this.showElement(document.getElementById("show"))
+        this.hideElement(element)
     }
 }

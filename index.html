@@ -7,13 +7,18 @@
 		<link rel="stylesheet" type="text/css" href="phaseswitch.css" /></head>
 		<link rel="stylesheet" type="text/css" href="session.css" /></head>
 		<link rel="stylesheet" type="text/css" href="controls.css" /></head>
+		<link rel="stylesheet" type="text/css" href="stats.css" /></head>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 		<script src="main.js"></script>
 		<script src="stats.js"></script>
 	<body>
 		<div id="main">
-			<div id="Stats" style="width: 500px;">
-				<canvas></canvas>
+			<button id="show" class="stats_btn" onclick="sm.showChart(this)" style="display: unset;">→</button>
+			<div id="stats_wrapper"> 
+				<button id="hide" class="stats_btn" onclick="sm.hideChart(this)">←</button>
+				<div id="stats" style="width: 70vh;height: 20vw;" class="">
+					<canvas></canvas>
+				</div>
 			</div>
 			<div>
 				<div id="container">
@@ -55,8 +60,8 @@
 		</a>
 	</body>
 	<script>
-		var chart_canvas =document.getElementById("Stats").children[0]
-		var sm = new StatsDisplay(chart_canvas)
+		var chart =document.getElementById("stats")
+		var sm = new StatsDisplay(chart)
 		var p = new Phase(sm) //start phase manager after all display elements have been ran through the dom
 	</script>
 </html>

@@ -1,0 +1,102 @@
+@keyframes stats_display_show{
+    from{
+        translate: -30vw 0;
+        opacity: 0%;
+        filter: blur(3px);
+    }
+    
+    to{
+        translate: 0 0;
+        opacity: 100%;
+    }
+}
+@keyframes stats_display_hide{
+    from{
+        translate: 0 0;
+        opacity: 100%;
+    }
+    
+    to{
+        translate: -30vw 0;
+        opacity: 0%;
+        filter: blur(3px);
+    }
+}
+
+@keyframes margin_expand {
+    from{
+    }
+    to{
+        margin-right: 10vh;
+    }
+}
+@keyframes margin_retract {
+    from{
+        margin-right: 10vh;
+    }
+    to{
+    }
+}
+@keyframes width_expand{
+    from{width: 0;}
+    to{width: 70vh;}
+}
+@keyframes width_retract{
+    from{width: 70vh;}
+    to{width: 0;}
+}
+
+.show_stats{
+    animation-duration: 3s;
+    animation-name: stats_display_show;
+    animation-fill-mode: forwards;
+}
+.hide_stats{
+    animation-duration: 3s;
+    animation-name: stats_display_hide;
+    animation-fill-mode: forwards;
+}
+
+#stats_wrapper{
+    display: flex;
+    flex-direction: row;
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    width: 0;
+}
+
+.stats_btn{
+    display: none;
+    font-size: 150%;
+    margin-right: 3.5vh;
+    height: 5vh;
+    border: 3px solid rgb(70, 70, 70);
+    color: white;
+    background-color: rgb(29, 36, 43);
+    border-radius: 30px;
+    box-shadow: rgb(5, 7, 8) 14px 18px 10px 2px;
+    cursor: pointer;
+}
+
+.stats_btn:hover{
+    border-color:rgb(255, 194, 27) ;
+}
+
+.stats_btn:active{
+    transform: translate(0.5px,0.5px) ;
+    box-shadow: rgb(5,7,8) 13px 16px 5px 1px;
+}
+
+#show{
+    margin-left: 2vh;
+    position: absolute;
+    left: 0;
+    z-index: 20;
+}
+
+#hide{
+    display: unset;
+}
