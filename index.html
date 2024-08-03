@@ -12,8 +12,8 @@
 		<script src="stats.js"></script>
 	<body>
 		<div id="main">
-			<div style="width: 500px;">
-				<canvas id="test"></canvas>
+			<div id="Stats" style="width: 500px;">
+				<canvas></canvas>
 			</div>
 			<div>
 				<div id="container">
@@ -55,7 +55,8 @@
 		</a>
 	</body>
 	<script>
-		var sm = new StatsDisplay("test")
+		var chart_canvas =document.getElementById("Stats").children[0]
+		var sm = new StatsDisplay(chart_canvas)
 		var p = new Phase(sm) //start phase manager after all display elements have been ran through the dom
 	</script>
 </html>

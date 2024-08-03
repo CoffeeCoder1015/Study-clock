@@ -1,9 +1,9 @@
 class StatsDisplay {
-    constructor(char_id) {
+    constructor(chart_canvas) {
         this.break_time = new Array(24).fill(0) //all in seconds
         this.study_time = new Array(24).fill(0) //all in seconds
         this.chart = new Chart(
-            document.getElementById(char_id),
+            chart_canvas,
             {
                 type: 'bar',
                 data: {
