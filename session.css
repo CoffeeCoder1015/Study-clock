@@ -25,6 +25,7 @@ to {
     translate: 0 30vh;
     opacity: 0%;
     height: 0%;
+    filter: blur(3px);
 }
 }
 

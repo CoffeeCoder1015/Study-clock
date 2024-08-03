@@ -2,6 +2,7 @@
 from {
     translate: 0 -30vh;
     opacity: 0%;
+    filter: blur(3px);
 }
 
 to {
@@ -10,16 +11,17 @@ to {
 }
 }
 @keyframes slideout {
-from {
-    translate: 0 -10vh;
-    opacity: 100%;
-    height: 100%;
-}
-
-to {
-    translate: 0 30vh;
-    opacity: 0%;
-    height: 0%;
+    from {
+        translate: 0 -10vh;
+        opacity: 100%;
+        height: 100%;
+    }
+    
+    to {
+        translate: 0 30vh;
+        opacity: 0%;
+        height: 0%;
+        filter: blur(3px);
 }
 }
 
