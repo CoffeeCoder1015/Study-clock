@@ -30,6 +30,9 @@ function input_time(){
 }
 
 function update_text(t,e) {
+    if(e.code == "KeyE"){
+        e.preventDefault()
+    }
     var text = String(t.value)
     if(e.code == "Backspace" && text == ""){
         text = "0"
@@ -73,7 +76,7 @@ class Phase{
         this.state = this.homescreen
         
         //alarm
-        this.alarm = new Audio('alarm2.wav');
+        this.alarm = new Audio('alarm.wav');
         this.alarm_player = null;
         this.loop_alarm_times = 5;
 
