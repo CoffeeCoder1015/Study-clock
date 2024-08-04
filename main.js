@@ -30,7 +30,8 @@ function input_time(){
 }
 
 function update_text(t,e) {
-    if(e.code == "KeyE"){
+    var block_set = ["KeyE","Minus"]
+    if(block_set.includes(e.code)){
         e.preventDefault()
     }
     var text = String(t.value)
