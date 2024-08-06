@@ -43,22 +43,33 @@ function update_text(t,e) {
         text = break_time_cache_str
         t.value = break_time_cache_str
     }
-    if (text.length > 6){
-        text = text.substring(text.length-6,text.length)
-        t.value = text
+    if (text.length > 6) {
+        text = text.substring(text.length - 6, text.length);
+        t.value = text;
     }
-    text = String("0").repeat(6-text.length) + text 
-    sec = Number(text.substring(4,6))
-    min = Number(text.substring(2,4))
-    hr = Number(text.substring(0,2))
+    text = String("0").repeat(6 - text.length) + text;
+    var time_chunks = parseTimerStr(text);
+    hr = time_chunks[0]
+    min = time_chunks[1]
+    sec = time_chunks[2]
     var time =document.getElementById("btimer").children
     time.namedItem("hr").innerText = text.substring(0,2)
     time.namedItem("min").innerText = text.substring(2,4)
     time.namedItem("sec").innerText = text.substring(4,6)
 }
 
+function parseTimerStr(text) {
+    var chunks = []
+    for(var i = 0; i <= 4; i += 2){
+        var time_chunck = Number(text.substring(i,i+2))
+        chunks.push(time_chunck)
+    }
+    return chunks;
+}
+
 function clear_input(t) {
     break_time_cache_str = t.value
+    localStorage.setItem("break_time_cache",break_time_cache_str)
     t.value = "" 
 }
 
@@ -86,6 +97,21 @@ class Phase{
 
         //stats
         this.sm = statistics_manager
+        
+
+        //load storage
+        //# load last saved break time
+        var btc = localStorage.getItem("break_time_cache")
+        if(btc != null){
+            btc = String("0").repeat(6 - btc.length) + btc;
+            var time_chunks = parseTimerStr(btc);
+            hr = time_chunks[0]
+            min = time_chunks[1]
+            sec = time_chunks[2]
+            this.recalculate()
+        }
+
+        
     }
 
     check_if_no_time_set(){
