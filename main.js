@@ -110,8 +110,6 @@ class Phase{
             sec = time_chunks[2]
             this.recalculate()
         }
-
-        
     }
 
     check_if_no_time_set(){

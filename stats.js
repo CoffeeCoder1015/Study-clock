@@ -80,6 +80,31 @@ class StatsDisplay {
                 }
             }
         )
+
+        //load storage
+        //# load last saved break time
+        var last_timestamp = localStorage.getItem("statsTS")
+        if(last_timestamp == null){
+            return
+        }
+        var current_timestamp = new Date().toLocaleDateString()
+        if (last_timestamp == current_timestamp){
+            this.break_time = localStorage.getItem("break_time_stats").split(",").map((v)=>Number(v))
+            this.study_time = localStorage.getItem("study_time_stats").split(",").map((v)=>Number(v))
+            this.syncChart(1,this.break_time.map((v)=>v/60))
+            this.syncChart(0,this.study_time.map((v)=>v/60))
+            this.chart.update()
+        }
+    }
+
+    storeState(){
+        localStorage.setItem("statsTS",new Date().toLocaleDateString())
+        localStorage.setItem("break_time_stats",this.break_time.toString())
+        localStorage.setItem("study_time_stats",this.study_time.toString())
+    }
+
+    syncChart(chart_number,data){
+        this.chart.data.datasets[chart_number].data = data
     }
 
     increment(type){
@@ -92,6 +117,7 @@ class StatsDisplay {
             this.chart.data.datasets[0].data[index] = this.study_time[index]/60
         }
         this.chart.update()
+        this.storeState()
     }
 
     showElement(element){
