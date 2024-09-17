@@ -94,11 +94,12 @@ class StatsDisplay {
             this.syncChart(1,this.break_time.map((v)=>v/60))
             this.syncChart(0,this.study_time.map((v)=>v/60))
             this.chart.update()
+        }else{
+            localStorage.setItem("statsTS",new Date().toLocaleDateString())
         }
     }
 
     storeState(){
-        localStorage.setItem("statsTS",new Date().toLocaleDateString())
         localStorage.setItem("break_time_stats",this.break_time.toString())
         localStorage.setItem("study_time_stats",this.study_time.toString())
     }
