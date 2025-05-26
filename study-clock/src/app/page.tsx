@@ -1,9 +1,12 @@
-import Image from "next/image";
+import styles from "@/app/ui/home.module.css";
 
 export default function Home() {
   return (
-    <h1>
+    <div className={styles.main}>
+      Start
+      Study
+      Break
       Hello
-    </h1>
+    </div>
   );
 }
