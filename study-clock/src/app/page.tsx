@@ -1,17 +1,20 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useRef, } from "react"
 
-import styles from "@/app/ui/home.module.css";
+import homeStyles from "@/app/ui/home.module.css";
+import sessionControlStyles from "@/app/ui/session.controls.module.css";
 import { Clock } from "@/components/clock";
 import { Input } from "@/components/ui/input";
-import { StartStopButton, SwitchButton } from "@/components/controls";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
     const [state, setState] = useState<"homescreen" | "study" | "break">("homescreen")
     const inputRef = useRef<HTMLInputElement>(null)
     const [studyTime, setStudyTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
     const [breakTime, setBreakTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
+    const [clockOrder,SetClockOrder] = useState("flex flex-col")
+
 
     // Wrapper for clock display + invisible input 
     // So you can click on clock display of breaktimer to set a new time
@@ -60,7 +63,7 @@ export default function Home() {
         }
 
         return (
-            <div onClick={handleOnClick}>
+            <div onClick={handleOnClick} className={getAnimation("break")}>
                 <Clock label="Break clock" time={breakTime} />
                 <Input
                     ref={inputRef}
@@ -75,14 +78,60 @@ export default function Home() {
             </div>
         )
     }
-
+    
+    const sessionSwitch = () => {
+        if (state == "study") {
+            SetClockOrder("flex flex-col-reverse")
+            setState("break") 
+        }else{
+            SetClockOrder("flex flex-col")
+            setState("study")
+        }
+    }
+    
+    const startStop = () => {
+        if (state == "homescreen") {
+           setState("study") 
+        }else{
+            setState("homescreen")
+        }
+        SetClockOrder("flex-col")
+    }
+    
+    const getAnimation = (type:string):string => {
+        if(type == "break"){
+            if (state == "break") {
+               return sessionControlStyles.slidein 
+            }else if (state == "study"){
+                return sessionControlStyles.slideout 
+            }
+        }else if (type == "study"){
+            if (state == "break") {
+                return sessionControlStyles.slideout 
+            }else if (state == "study"){
+                return sessionControlStyles.slidein 
+            }            
+        }
+        return ""
+    }
+    
     return (
-        <div className={styles.main}>
+        <div className={homeStyles.main}>
             <div>
-                <Clock label="Study clock" time={studyTime} />
-                {breakTimer()}
-                {state != "homescreen" && <SwitchButton state={state} setState={setState}/ > }
-                <StartStopButton state={state} setState={setState}/>
+                <div className={clockOrder}>
+                    <div className={getAnimation("study")}>
+                        <Clock label="Study clock" time={studyTime} />
+                    </div>
+                    {breakTimer()}
+                </div>
+                <div className="relative z-10">
+                    {state != "homescreen" && <Button onClick={sessionSwitch}>
+                        {state == "study" ? "Break 🥳" : "Study 📝"}
+                    </Button>}
+                    <Button onClick={startStop}>
+                        {state == "homescreen" ? "Start!" : "End!"}
+                    </Button>
+                </div>
             </div>
         </div>
     )
