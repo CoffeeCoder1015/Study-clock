@@ -14,12 +14,47 @@ export default function Home() {
     // Wrapper for clock display + invisible input 
     // So you can click on clock display of breaktimer to set a new time
     function breakTimer() {
+        const [inputValue,setInputValue] = useState("");
+        const [breakCache,setBreakCache] = useState("");
+
         const handleKeyDown = (e: React.KeyboardEvent) => {
-            console.log(e.key)
+            var block_set = ["e","-","+"]
+            if(block_set.includes(e.key)){
+                e.preventDefault()
+            }
+            var text = String(inputRef.current?.value)
+            if(e.code == "Backspace" && text == ""){
+                text = "0"
+                setInputValue("0")
+                processRawInputValue(text)
+            }
+            if(e.code == "Escape"){
+                setInputValue(breakCache)
+                processRawInputValue(breakCache)
+            }
         }
         
         const handleOnClick = () => {
             inputRef.current?.focus()
+        }
+        
+        const handleOnBlur = () => {
+            setBreakCache(inputValue)
+            setInputValue("")
+        }
+        
+        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value.replace(/[^0-9]/g, "")
+            setInputValue(value)
+            processRawInputValue(value)
+        }
+        
+        const processRawInputValue = (value: String) => {
+            var text  = value.padStart(6,"0")
+            const hours = Number.parseInt(text.substring(0, 2))
+            const minutes = Number.parseInt(text.substring(2, 4))
+            const seconds = Number.parseInt(text.substring(4, 6))
+            setBreakTime({hours:hours,minutes:minutes,seconds:seconds})
         }
 
         return (
@@ -29,8 +64,11 @@ export default function Home() {
                     ref={inputRef}
                     id="break-input"
                     type="number"
+                    value={inputValue}
                     className="absolute opacity-0 w-0 h-0 -z-10"
                     onKeyDown={handleKeyDown}
+                    onChange={handleInputChange}
+                    onBlur={handleOnBlur}
                 />
             </div>
         )
