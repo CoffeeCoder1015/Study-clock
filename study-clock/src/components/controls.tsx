@@ -6,11 +6,21 @@ interface controlProps{
     setState: Dispatch<SetStateAction<"homescreen" | "study" | "break">>
 }
 
-export function SwitchButton() {
+export function SwitchButton({ state,setState }:controlProps) {
+    var displayString = state == "study" ?  "Break 🥳": "Study 📝" 
+    
+    const switchState = () => {
+        if(state == "study"){
+            setState("break")
+        }else{
+            setState("study")
+        }
+    }
+
     return(
-        <h1>
-            Hello switch
-        </h1>
+        <Button onClick={switchState}>
+            {displayString}
+        </Button>
     )
 }
 

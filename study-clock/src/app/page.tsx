@@ -81,9 +81,9 @@ export default function Home() {
             <div>
                 <Clock label="Study clock" time={studyTime} />
                 {breakTimer()}
-                {state != "homescreen" && <SwitchButton/> }
+                {state != "homescreen" && <SwitchButton state={state} setState={setState}/ > }
                 <StartStopButton state={state} setState={setState}/>
             </div>
         </div>
-    );
+    )
 }
