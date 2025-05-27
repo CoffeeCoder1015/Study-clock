@@ -10,7 +10,7 @@ export function Clock({ label, time}: TimerProps)  {
   return(
     <div>
       <div className="text-2xl mb-4">{label}</div>
-      <div className="text-6xl font-mono">
+      <div className="text-8xl font-mono border-solid border-4 rounded-md">
         <span id="hr">{formatTime(time.hours)}</span>:
         <span id="min">{formatTime(time.minutes)}</span>:
         <span id="sec">{formatTime(time.seconds)}</span>
