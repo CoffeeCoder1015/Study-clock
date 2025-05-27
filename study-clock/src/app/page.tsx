@@ -202,7 +202,7 @@ export default function Home() {
         }else{
             setState("homescreen")
         }
-        SetClockOrder("flex-col")
+        SetClockOrder("flex flex-col")
     }
     
     const getAnimation = (type:string):string => {
