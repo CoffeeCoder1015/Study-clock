@@ -24,7 +24,7 @@ export default function Home() {
         if (state == "study") {
             startStudying()
         }else if (state == "break") {
-
+            startBreak()
         }else{
 
         }
@@ -37,6 +37,16 @@ export default function Home() {
         
         studyTimerRef.current = setInterval(() => {
             setStudyTime((prev) => { return recalculate({...prev,seconds:prev.seconds+1}) })
+        }, 1000);
+    },[])
+
+    const startBreak = useCallback(()=>{
+        if (breaTimerRef.current) {
+           return 
+        }
+        
+        breaTimerRef.current = setInterval(() => {
+            setBreakTime((prev) => { return recalculate({...prev,seconds:prev.seconds-1}) })
         }, 1000);
     },[])
     
