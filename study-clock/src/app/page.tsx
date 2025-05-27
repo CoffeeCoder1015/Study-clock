@@ -80,10 +80,10 @@ export default function Home() {
         if (breakTimerRef.current) {
             clearInterval(breakTimerRef.current)
             breakTimerRef.current = null
-            setInputValue(breakCache)
-            processRawInputValue(breakCache)
         }
-    },[])
+        setInputValue(breakCache)
+        processRawInputValue(breakCache)
+    },[breakCache])
     
     function modulo(x :number, m: number) {
         return ( (x % m) + m ) % m
