@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, } from "react"
+import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback, } from "react"
 
 import homeStyles from "@/app/ui/home.module.css";
 import sessionControlStyles from "@/app/ui/session.controls.module.css";
@@ -8,25 +8,50 @@ import { Clock } from "@/components/clock";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
     const [state, setState] = useState<"homescreen" | "study" | "break">("homescreen")
     const inputRef = useRef<HTMLInputElement>(null)
-    const [studyTime, setStudyTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
-    const [breakTime, setBreakTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
+    const [studyTime, setStudyTime] = useState<time>({ hours: 0, minutes: 0, seconds: 0 })
+    const [breakTime, setBreakTime] = useState<time>({ hours: 0, minutes: 0, seconds: 0 })
     const [clockOrder,SetClockOrder] = useState("flex flex-col")
+    
+    const studyTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const breaTimerRef = useRef<NodeJS.Timeout | null>(null)
+    
+    useEffect(()=>{
+        console.log(state)
+        if (state == "study") {
+            startStudying()
+        }else if (state == "break") {
 
+        }else{
 
-    function recalculate(hours:number,minutes:number,seconds:number){
+        }
+    },[state])
+    
+    const startStudying = useCallback(()=>{
+        if (studyTimerRef.current) {
+           return 
+        }
+        
+        studyTimerRef.current = setInterval(() => {
+            setStudyTime((prev) => { return recalculate({...prev,seconds:prev.seconds+1}) })
+        }, 1000);
+    },[])
+    
+
+    function recalculate({ hours,minutes,seconds }:time):time{
         var sec = seconds
         var min = minutes + parseInt(( sec/60 ).toString())
         sec %= 60
         var hr  = hours + parseInt(( min/60 ).toString())
         min %= 60
-        setBreakTime({
+        return {
             seconds: sec,
             minutes: min,
             hours  : hr
-        })
+        }
     }
 
     // Wrapper for clock display + invisible input 
@@ -59,7 +84,7 @@ export default function Home() {
         const handleOnBlur = () => {
             setBreakCache(inputValue)
             setInputValue("")
-            recalculate(breakTime.hours,breakTime.minutes,breakTime.seconds)
+            setBreakTime(recalculate(breakTime))
         }
         
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
