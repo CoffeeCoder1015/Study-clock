@@ -39,7 +39,7 @@ export default function Home() {
         }else{
             resetTimers()
         }
-    },[state])
+    },[state,breakCache])
     
     const startStudying = useCallback(()=>{
         if (studyTimerRef.current) {
@@ -87,9 +87,9 @@ export default function Home() {
         if (breakTimerRef.current) {
             clearInterval(breakTimerRef.current)
             breakTimerRef.current = null
+            processRawInputValue(breakCache)
+            setBreakTime(recalculate(breakTime))
         }
-        setInputValue(breakCache)
-        processRawInputValue(breakCache)
     },[breakCache])
     
     function modulo(x :number, m: number) {
