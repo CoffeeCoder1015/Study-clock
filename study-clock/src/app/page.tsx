@@ -69,13 +69,27 @@ export default function Home() {
         }
     },[])
     
+    function modulo(x :number, m: number) {
+        return ( (x % m) + m ) % m
+    }
+    
 
     function recalculate({ hours,minutes,seconds }:time):time{
+        var smult = 1
         var sec = seconds
-        var min = minutes + parseInt(( sec/60 ).toString())
-        sec %= 60
-        var hr  = hours + parseInt(( min/60 ).toString())
-        min %= 60
+        if (seconds < 0) {
+            smult = 60 
+        }
+
+        var min = minutes + parseInt(( smult*sec/60 ).toString())
+        sec = modulo(sec,60)
+        var mmult = 1
+
+        if (min < 0) {
+           mmult = 60 
+        }
+        var hr  = hours + parseInt(( mmult*min/60 ).toString())
+        min = modulo(min,60)
         return {
             seconds: sec,
             minutes: min,
