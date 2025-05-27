@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import styles from "@/app/ui/home.module.css";
 import { Clock } from "@/components/clock";
 import { Input } from "@/components/ui/input";
+import { StartStopButton, SwitchButton } from "@/components/controls";
 
 export default function Home() {
     const inputRef = useRef<HTMLInputElement>(null)
@@ -79,6 +80,8 @@ export default function Home() {
             <div>
                 <Clock label="Study clock" time={studyTime} />
                 {breakTimer()}
+                <SwitchButton/>
+                <StartStopButton/>
             </div>
         </div>
     );
