@@ -22,6 +22,12 @@ export default function Home() {
     const [inputValue, setInputValue] = useState("");
     const [breakCache, setBreakCache] = useState("");
     
+    const alarmRef = useRef<HTMLAudioElement | null>(null)
+    
+    useEffect(() => {
+        alarmRef.current = new Audio("/alarm.wav")
+    },[])
+
     useEffect(()=>{
         console.log(state)
         if (state == "study") {
@@ -51,7 +57,17 @@ export default function Home() {
         }
         
         breakTimerRef.current = setInterval(() => {
-            setBreakTime((prev) => { return recalculate({...prev,seconds:prev.seconds-1}) })
+            setBreakTime((prev) => {
+                if (prev.hours == 0 && prev.minutes == 0 && prev.seconds == 0) {
+                    if (alarmRef.current) {
+                        for (let i = 0; i < 5; i++) {
+                            setTimeout(() => alarmRef.current?.play(), i * 1000)
+                        }
+                    }
+                    resetTimers()
+                }
+                return recalculate({ ...prev, seconds: prev.seconds - 1 })
+            })
         }, 1000);
     },[])
     
