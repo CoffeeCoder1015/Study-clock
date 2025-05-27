@@ -16,6 +16,19 @@ export default function Home() {
     const [clockOrder,SetClockOrder] = useState("flex flex-col")
 
 
+    function recalculate(hours:number,minutes:number,seconds:number){
+        var sec = seconds
+        var min = minutes + parseInt(( sec/60 ).toString())
+        sec %= 60
+        var hr  = hours + parseInt(( min/60 ).toString())
+        min %= 60
+        setBreakTime({
+            seconds: sec,
+            minutes: min,
+            hours  : hr
+        })
+    }
+
     // Wrapper for clock display + invisible input 
     // So you can click on clock display of breaktimer to set a new time
     function breakTimer() {
@@ -46,10 +59,12 @@ export default function Home() {
         const handleOnBlur = () => {
             setBreakCache(inputValue)
             setInputValue("")
+            recalculate(breakTime.hours,breakTime.minutes,breakTime.seconds)
         }
         
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const value = e.target.value.replace(/[^0-9]/g, "")
+            var value = e.target.value.replace(/[^0-9]/g, "")
+            value = value.substring(value.length - 6, value.length)
             setInputValue(value)
             processRawInputValue(value)
         }
