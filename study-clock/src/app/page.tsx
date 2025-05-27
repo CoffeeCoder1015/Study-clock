@@ -19,8 +19,11 @@ export default function Home() {
     const studyTimerRef = useRef<NodeJS.Timeout | null>(null)
     const breakTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-    const [inputValue, setInputValue] = useState("");
-    const [breakCache, setBreakCache] = useState("");
+    const [inputValue, setInputValue] = useState("")
+    const [breakCache, setBreakCache] = useState("")
+    
+    const [breakAnim, setBreakAnim] = useState("")
+    const [studyAnim, setStudyAnim] = useState("")
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
@@ -170,7 +173,7 @@ export default function Home() {
         }
         
         return (
-            <div onClick={handleOnClick} className={getAnimation("break")}>
+            <div onClick={handleOnClick} className={breakAnim}>
                 <Clock label="Break clock" time={breakTime} />
                 <Input
                     ref={inputRef}
@@ -190,43 +193,34 @@ export default function Home() {
         if (state == "study") {
             SetClockOrder("flex flex-col-reverse")
             setState("break") 
+            setStudyAnim(sessionControlStyles.slideout)
+            setBreakAnim(sessionControlStyles.slidein)
         }else{
             SetClockOrder("flex flex-col")
             setState("study")
+            setStudyAnim(sessionControlStyles.slidein)
+            setBreakAnim(sessionControlStyles.slideout)
         }
     }
     
     const startStop = () => {
         if (state == "homescreen") {
-           setState("study") 
-        }else{
+            setState("study")
+            setBreakAnim(sessionControlStyles.start_session_b)
+            setStudyAnim(sessionControlStyles.start_session)
+        } else {
             setState("homescreen")
+            setStudyAnim("")
+            setBreakAnim("")
         }
         SetClockOrder("flex flex-col")
-    }
-    
-    const getAnimation = (type:string):string => {
-        if(type == "break"){
-            if (state == "break") {
-               return sessionControlStyles.slidein 
-            }else if (state == "study"){
-                return sessionControlStyles.slideout 
-            }
-        }else if (type == "study"){
-            if (state == "break") {
-                return sessionControlStyles.slideout 
-            }else if (state == "study"){
-                return sessionControlStyles.slidein 
-            }            
-        }
-        return ""
     }
     
     return (
         <div className={homeStyles.main}>
             <div>
                 <div className={clockOrder}>
-                    <div className={getAnimation("study")}>
+                    <div className={studyAnim}>
                         <Clock label="Study clock" time={studyTime} />
                     </div>
                     {breakTimer()}
