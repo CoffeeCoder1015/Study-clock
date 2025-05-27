@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { StartStopButton, SwitchButton } from "@/components/controls";
 
 export default function Home() {
+    const [state, setState] = useState<"homescreen" | "study" | "break">("homescreen")
     const inputRef = useRef<HTMLInputElement>(null)
     const [studyTime, setStudyTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
     const [breakTime, setBreakTime] = useState({ hours: 0, minutes: 0, seconds: 0 })
@@ -80,8 +81,8 @@ export default function Home() {
             <div>
                 <Clock label="Study clock" time={studyTime} />
                 {breakTimer()}
-                <SwitchButton/>
-                <StartStopButton/>
+                {state != "homescreen" && <SwitchButton/> }
+                <StartStopButton state={state} setState={setState}/>
             </div>
         </div>
     );
