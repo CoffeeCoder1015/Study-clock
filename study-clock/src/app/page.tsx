@@ -56,20 +56,27 @@ export default function Home() {
            return 
         }
         
+        var remainingTime = breakTime
+        
         breakTimerRef.current = setInterval(() => {
-            setBreakTime((prev) => {
-                if (prev.hours == 0 && prev.minutes == 0 && prev.seconds == 0) {
-                    if (alarmRef.current) {
-                        for (let i = 0; i < 5; i++) {
-                            setTimeout(() => alarmRef.current?.play(), i * 1000)
-                        }
+            if (remainingTime.hours == 0 && remainingTime.minutes == 0 && remainingTime.seconds == 0) {
+                if (alarmRef.current) {
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => alarmRef.current?.play(), i * 1000)
                     }
-                    resetTimers()
                 }
-                return recalculate({ ...prev, seconds: prev.seconds - 1 })
-            })
+                if (breakTimerRef.current) {
+                   clearInterval(breakTimerRef.current) 
+                    breakTimerRef.current = null
+                }
+                return
+            }
+            remainingTime = recalculate({ ...remainingTime, seconds: remainingTime.seconds - 1 })
+            if (document.activeElement != inputRef.current) {
+                setBreakTime(remainingTime)
+            }
         }, 1000);
-    },[])
+    },[breakTime])
     
     const resetTimers = useCallback(() => {
         if (studyTimerRef.current) {
@@ -157,6 +164,10 @@ export default function Home() {
             value = value.substring(value.length - 6, value.length)
             setInputValue(value)
             processRawInputValue(value)
+            if (breakTimerRef.current) {
+                clearInterval(breakTimerRef.current)
+                breakTimerRef.current = null
+            }
         }
         
         return (
