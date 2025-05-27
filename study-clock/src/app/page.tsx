@@ -17,16 +17,21 @@ export default function Home() {
     const [clockOrder,SetClockOrder] = useState("flex flex-col")
     
     const studyTimerRef = useRef<NodeJS.Timeout | null>(null)
-    const breaTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const breakTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+    const [inputValue, setInputValue] = useState("");
+    const [breakCache, setBreakCache] = useState("");
     
     useEffect(()=>{
         console.log(state)
         if (state == "study") {
+            resetTimers()
             startStudying()
         }else if (state == "break") {
+            resetTimers()
             startBreak()
         }else{
-
+            resetTimers()
         }
     },[state])
     
@@ -41,13 +46,27 @@ export default function Home() {
     },[])
 
     const startBreak = useCallback(()=>{
-        if (breaTimerRef.current) {
+        if (breakTimerRef.current) {
            return 
         }
         
-        breaTimerRef.current = setInterval(() => {
+        breakTimerRef.current = setInterval(() => {
             setBreakTime((prev) => { return recalculate({...prev,seconds:prev.seconds-1}) })
         }, 1000);
+    },[])
+    
+    const resetTimers = useCallback(() => {
+        if (studyTimerRef.current) {
+            clearInterval(studyTimerRef.current)
+            studyTimerRef.current = null
+            setStudyTime({hours:0,minutes:0,seconds:0})
+        }
+        if (breakTimerRef.current) {
+            clearInterval(breakTimerRef.current)
+            breakTimerRef.current = null
+            setInputValue(breakCache)
+            processRawInputValue(breakCache)
+        }
     },[])
     
 
@@ -64,12 +83,18 @@ export default function Home() {
         }
     }
 
+    const processRawInputValue = (value: String) => {
+        var text = value.padStart(6, "0")
+        const hours = Number.parseInt(text.substring(0, 2))
+        const minutes = Number.parseInt(text.substring(2, 4))
+        const seconds = Number.parseInt(text.substring(4, 6))
+        setBreakTime({ hours: hours, minutes: minutes, seconds: seconds })
+    }
+
+
     // Wrapper for clock display + invisible input 
     // So you can click on clock display of breaktimer to set a new time
     function breakTimer() {
-        const [inputValue,setInputValue] = useState("");
-        const [breakCache,setBreakCache] = useState("");
-
         const handleKeyDown = (e: React.KeyboardEvent) => {
             var block_set = ["e","-","+"]
             if(block_set.includes(e.key)){
@@ -104,14 +129,6 @@ export default function Home() {
             processRawInputValue(value)
         }
         
-        const processRawInputValue = (value: String) => {
-            var text  = value.padStart(6,"0")
-            const hours = Number.parseInt(text.substring(0, 2))
-            const minutes = Number.parseInt(text.substring(2, 4))
-            const seconds = Number.parseInt(text.substring(4, 6))
-            setBreakTime({hours:hours,minutes:minutes,seconds:seconds})
-        }
-
         return (
             <div onClick={handleOnClick} className={getAnimation("break")}>
                 <Clock label="Break clock" time={breakTime} />
