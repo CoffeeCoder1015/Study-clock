@@ -4,8 +4,8 @@ import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback, } f
 
 import homeStyles from "@/app/ui/home.module.css";
 import sessionControlStyles from "@/app/ui/session.controls.module.css";
+import buttonStyles from "@/app/ui/buttons.module.css";
 import { Clock } from "@/components/clock";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 interface time { hours: number; minutes: number; seconds: number }
@@ -206,10 +206,10 @@ export default function Home() {
                     />
                 </div>
                 <div className="relative z-10">
-                    {state != "homescreen" && <Button onClick={sessionSwitch} className="block">
+                    {state != "homescreen" && <Button onClick={sessionSwitch} className={`${buttonStyles.control_btn} block`}>
                         {state == "study" ? "Break 🥳" : "Study 📝"}
                     </Button>}
-                    <Button onClick={startStop} className="block">
+                    <Button onClick={startStop} className={`${buttonStyles.control_btn} ${state=="homescreen" && buttonStyles.start} block`}>
                         {state == "homescreen" ? "Start!" : "End!"}
                     </Button>
                 </div>

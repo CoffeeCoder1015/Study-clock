@@ -1,0 +1,27 @@
+.start{
+    margin-top: 2vh;
+}
+
+.control_btn{
+    font-size: 150%;
+    height: 100%;
+    width: 50%;
+    margin-left: 25%;
+    margin-bottom: 3vh;
+
+    border: 3px solid rgb(70, 70, 70);
+    color: white;
+    background-color: rgb(29, 36, 43);
+    border-radius: 30px;
+    box-shadow: rgb(5, 7, 8) 14px 18px 10px 2px;
+    cursor: pointer;
+}
+
+.control_btn:hover{
+    border-color:rgb(255, 194, 27) ;
+}
+
+.control_btn:active{
+    transform: translate(0.5px,0.5px) ;
+    box-shadow: rgb(5,7,8) 13px 16px 5px 1px;
+}
