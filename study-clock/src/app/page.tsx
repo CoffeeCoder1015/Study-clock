@@ -131,64 +131,40 @@ export default function Home() {
     }
 
 
-    // Wrapper for clock display + invisible input 
-    // So you can click on clock display of breaktimer to set a new time
-    function breakTimer() {
-        const handleKeyDown = (e: React.KeyboardEvent) => {
-            var block_set = ["e","-","+"]
-            if(block_set.includes(e.key)){
-                e.preventDefault()
-            }
-            var text = String(inputRef.current?.value)
-            if(e.code == "Backspace" && text == ""){
-                text = "0"
-                setInputValue("0")
-                processRawInputValue(text)
-            }
-            if(e.code == "Escape"){
-                setInputValue(breakCache)
-                processRawInputValue(breakCache)
-            }
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        var block_set = ["e","-","+"]
+        if(block_set.includes(e.key)){
+            e.preventDefault()
         }
-        
-        const handleOnClick = () => {
-            inputRef.current?.focus()
+        var text = String(inputRef.current?.value)
+        if(e.code == "Backspace" && text == ""){
+            text = "0"
+            setInputValue("0")
+            processRawInputValue(text)
         }
-        
-        const handleOnBlur = () => {
-            setBreakCache(inputValue)
-            setInputValue("")
-            setBreakTime(recalculate(breakTime))
+        if(e.code == "Escape"){
+            setInputValue(breakCache)
+            processRawInputValue(breakCache)
         }
-        
-        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            var value = e.target.value.replace(/[^0-9]/g, "")
-            value = value.substring(value.length - 6, value.length)
-            setInputValue(value)
-            processRawInputValue(value)
-            if (breakTimerRef.current) {
-                clearInterval(breakTimerRef.current)
-                breakTimerRef.current = null
-            }
-        }
-        
-        return (
-            <div onClick={handleOnClick} className={breakAnim}>
-                <Clock label="Break clock" time={breakTime} />
-                <Input
-                    ref={inputRef}
-                    id="break-input"
-                    type="number"
-                    value={inputValue}
-                    className="absolute opacity-0 w-0 h-0 -z-10"
-                    onKeyDown={handleKeyDown}
-                    onChange={handleInputChange}
-                    onBlur={handleOnBlur}
-                />
-            </div>
-        )
     }
     
+    const handleOnBlur = () => {
+        setBreakCache(inputValue)
+        setInputValue("")
+        setBreakTime(recalculate(breakTime))
+    }
+    
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        var value = e.target.value.replace(/[^0-9]/g, "")
+        value = value.substring(value.length - 6, value.length)
+        setInputValue(value)
+        processRawInputValue(value)
+        if (breakTimerRef.current) {
+            clearInterval(breakTimerRef.current)
+            breakTimerRef.current = null
+        }
+    }
+
     const sessionSwitch = () => {
         if (state == "study") {
             SetClockOrder("flex flex-col-reverse")
@@ -220,10 +196,14 @@ export default function Home() {
         <div className={homeStyles.main}>
             <div>
                 <div className={clockOrder}>
-                    <div className={studyAnim}>
-                        <Clock label="Study clock" time={studyTime} />
-                    </div>
-                    {breakTimer()}
+                    <Clock label="Study clock" time={studyTime} className={studyAnim} />
+                    <Clock label="Break clock" time={breakTime} className={breakAnim} isBreakTimer
+                        value={inputValue}
+                        onKeyDown={handleKeyDown}
+                        onBlur={handleOnBlur}
+                        onChange={handleInputChange}
+                        ref={inputRef}
+                    />
                 </div>
                 <div className="relative z-10">
                     {state != "homescreen" && <Button onClick={sessionSwitch}>
