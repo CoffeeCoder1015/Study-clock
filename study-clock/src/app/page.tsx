@@ -23,7 +23,7 @@ export default function Home() {
     const [breakCache, setBreakCache] = useState("")
     
     const [breakAnim, setBreakAnim] = useState("")
-    const [studyAnim, setStudyAnim] = useState("")
+    const [studyAnim, setStudyAnim] = useState(sessionControlStyles.homescreen_state)
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
@@ -186,7 +186,7 @@ export default function Home() {
             setStudyAnim(sessionControlStyles.start_session)
         } else {
             setState("homescreen")
-            setStudyAnim("")
+            setStudyAnim(sessionControlStyles.homescreen_state)
             setBreakAnim("")
         }
         SetClockOrder("flex flex-col")
@@ -196,8 +196,8 @@ export default function Home() {
         <div className={homeStyles.main}>
             <div>
                 <div className={clockOrder}>
-                    <Clock label="Study clock" time={studyTime} className={studyAnim} />
-                    <Clock label="Break clock" time={breakTime} className={breakAnim} isBreakTimer
+                    <Clock label="Study 📝" time={studyTime} className={studyAnim} />
+                    <Clock label="Break 🥳" time={breakTime} className={breakAnim} isBreakTimer
                         value={inputValue}
                         onKeyDown={handleKeyDown}
                         onBlur={handleOnBlur}

@@ -74,3 +74,8 @@ to {
     animation-name: start_session_b;
     animation-fill-mode: forwards;
 }
+
+
+.homescreen_state{
+    margin-bottom: 5vh;
+}
