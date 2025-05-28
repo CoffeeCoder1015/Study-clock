@@ -206,10 +206,10 @@ export default function Home() {
                     />
                 </div>
                 <div className="relative z-10">
-                    {state != "homescreen" && <Button onClick={sessionSwitch}>
+                    {state != "homescreen" && <Button onClick={sessionSwitch} className="block">
                         {state == "study" ? "Break 🥳" : "Study 📝"}
                     </Button>}
-                    <Button onClick={startStop}>
+                    <Button onClick={startStop} className="block">
                         {state == "homescreen" ? "Start!" : "End!"}
                     </Button>
                 </div>
