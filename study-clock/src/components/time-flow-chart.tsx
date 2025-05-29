@@ -5,48 +5,48 @@ import { session  } from "@/components/store/stats";
 // Sample data: each event has start and end times
 const eventData = [
   // Hour 0
-  { hour: 0, startMinute: 5, endMinute: 12, type: "break", id: "d1" },
-  { hour: 0, startMinute: 15, endMinute: 25, type: "study", id: "m1" },
-  { hour: 0, startMinute: 42, endMinute: 48, type: "break", id: "d2" },
-  { hour: 0, startMinute: 50, endMinute: 58, type: "study", id: "m2" },
+  { hour: 0, startMinute: 5, endMinute: 12, type: "break", },
+  { hour: 0, startMinute: 15, endMinute: 25, type: "study", },
+  { hour: 0, startMinute: 42, endMinute: 48, type: "break", },
+  { hour: 0, startMinute: 50, endMinute: 58, type: "study", },
 
   // Hour 1
-  { hour: 1, startMinute: 7, endMinute: 20, type: "break", id: "d3" },
-  { hour: 1, startMinute: 23, endMinute: 35, type: "study", id: "m3" },
-  { hour: 1, startMinute: 40, endMinute: 55, type: "break", id: "d4" },
+  { hour: 1, startMinute: 7, endMinute: 20, type: "break", },
+  { hour: 1, startMinute: 23, endMinute: 35, type: "study", },
+  { hour: 1, startMinute: 40, endMinute: 55, type: "break", },
 
   // Hour 2
-  { hour: 2, startMinute: 5, endMinute: 18, type: "study", id: "m4" },
-  { hour: 2, startMinute: 25, endMinute: 40, type: "break", id: "d5" },
-  { hour: 2, startMinute: 45, endMinute: 58, type: "study", id: "m5" },
+  { hour: 2, startMinute: 5, endMinute: 18, type: "study", },
+  { hour: 2, startMinute: 25, endMinute: 40, type: "break", },
+  { hour: 2, startMinute: 45, endMinute: 58, type: "study", },
 
   // Hour 3
-  { hour: 3, startMinute: 2, endMinute: 15, type: "study", id: "m6" },
-  { hour: 3, startMinute: 18, endMinute: 30, type: "break", id: "d6" },
-  { hour: 3, startMinute: 35, endMinute: 45, type: "study", id: "m7" },
-  { hour: 3, startMinute: 48, endMinute: 59, type: "break", id: "d7" },
+  { hour: 3, startMinute: 2, endMinute: 15, type: "study", },
+  { hour: 3, startMinute: 18, endMinute: 30, type: "break", },
+  { hour: 3, startMinute: 35, endMinute: 45, type: "study", },
+  { hour: 3, startMinute: 48, endMinute: 59, type: "break", },
 
   // Hour 4
-  { hour: 4, startMinute: 8, endMinute: 22, type: "break", id: "d8" },
-  { hour: 4, startMinute: 25, endMinute: 40, type: "study", id: "m8" },
-  { hour: 4, startMinute: 45, endMinute: 55, type: "break", id: "d9" },
+  { hour: 4, startMinute: 8, endMinute: 22, type: "break", },
+  { hour: 4, startMinute: 25, endMinute: 40, type: "study", },
+  { hour: 4, startMinute: 45, endMinute: 55, type: "break", },
 
   // Hour 5
-  { hour: 5, startMinute: 3, endMinute: 18, type: "study", id: "m9" },
-  { hour: 5, startMinute: 25, endMinute: 45, type: "break", id: "d10" },
-  { hour: 5, startMinute: 50, endMinute: 59, type: "study", id: "m10" },
+  { hour: 5, startMinute: 3, endMinute: 18, type: "study", },
+  { hour: 5, startMinute: 25, endMinute: 45, type: "break", },
+  { hour: 5, startMinute: 50, endMinute: 59, type: "study", },
 
   // More hours
-  { hour: 8, startMinute: 10, endMinute: 25, type: "break", id: "d11" },
-  { hour: 8, startMinute: 30, endMinute: 50, type: "study", id: "m11" },
-  { hour: 9, startMinute: 15, endMinute: 35, type: "break", id: "d12" },
-  { hour: 10, startMinute: 20, endMinute: 45, type: "study", id: "m12" },
-  { hour: 12, startMinute: 5, endMinute: 30, type: "break", id: "d13" },
-  { hour: 12, startMinute: 35, endMinute: 55, type: "study", id: "m13" },
-  { hour: 14, startMinute: 10, endMinute: 40, type: "study", id: "m14" },
-  { hour: 16, startMinute: 20, endMinute: 50, type: "break", id: "d14" },
-  { hour: 18, startMinute: 5, endMinute: 25, type: "study", id: "m15" },
-  { hour: 20, startMinute: 30, endMinute: 55, type: "break", id: "d15" },
+  { hour: 8, startMinute: 10, endMinute: 25, type: "break", },
+  { hour: 8, startMinute: 30, endMinute: 50, type: "study", },
+  { hour: 9, startMinute: 15, endMinute: 35, type: "break", },
+  { hour: 10, startMinute: 20, endMinute: 45, type: "study", },
+  { hour: 12, startMinute: 5, endMinute: 30, type: "break", },
+  { hour: 12, startMinute: 35, endMinute: 55, type: "study", },
+  { hour: 14, startMinute: 10, endMinute: 40, type: "study", },
+  { hour: 16, startMinute: 20, endMinute: 50, type: "break", },
+  { hour: 18, startMinute: 5, endMinute: 25, type: "study", },
+  { hour: 20, startMinute: 30, endMinute: 55, type: "break", },
 ]
 
 export function MinuteEventChart() {
@@ -126,10 +126,10 @@ export function MinuteEventChart() {
             ))}
 
             {/* Event blocks */}
-            {eventData.map((event) => {
+            {eventData.map((event,idx) => {
               const { x, y, width, height } = getBlockPosition(event.hour, event.startMinute, event.endMinute)
               return (
-                <g key={event.id}>
+                <g key={idx}>
                   <rect
                     x={margin.left + x}
                     y={margin.top + y}
