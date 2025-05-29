@@ -142,7 +142,7 @@ export function MinuteEventChart() {
                     className="cursor-pointer hover:opacity-80"
                   />
                   <title>
-                    {`${event.type.charAt(0).toUpperCase() + event.type.slice(1)} Event\nTime: ${event.hour}:${event.startMinute.toString().padStart(2, "0")} - ${event.hour}:${event.endMinute.toString().padStart(2, "0")}\nDuration: ${event.endMinute - event.startMinute} minutes`}
+                    {`${event.type.charAt(0).toUpperCase() + event.type.slice(1)}\nTime: ${event.hour}:${event.startMinute.toString().padStart(2, "0")} - ${event.hour}:${event.endMinute.toString().padStart(2, "0")}\nDuration: ${event.endMinute - event.startMinute} minutes`}
                   </title>
                 </g>
               )
@@ -176,11 +176,11 @@ export function MinuteEventChart() {
           <div className="flex items-center gap-6 mt-4">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-green-500 rounded"></div>
-              <span className="text-sm">break Events</span>
+              <span className="text-sm">Breaks</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <span className="text-sm">study Events</span>
+              <span className="text-sm">Studying</span>
             </div>
           </div>
         </div>
