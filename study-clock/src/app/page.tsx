@@ -8,6 +8,7 @@ import buttonStyles from "@/app/ui/buttons.module.css";
 import { Clock } from "@/components/clock";
 import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
+import { log_break_cache,get_break_cache} from "@/components/stats";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -30,6 +31,9 @@ export default function Home() {
     
     useEffect(() => {
         alarmRef.current = new Audio("/alarm.wav")
+        const cache_result = get_break_cache()
+        setBreakCache(cache_result)
+        processRawInputValue(cache_result)
     },[])
 
     useEffect(()=>{
@@ -151,6 +155,7 @@ export default function Home() {
     
     const handleOnBlur = () => {
         setBreakCache(inputValue)
+        log_break_cache(inputValue)
         setInputValue("")
         setBreakTime(recalculate(breakTime))
     }
