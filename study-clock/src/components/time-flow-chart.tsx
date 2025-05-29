@@ -99,7 +99,9 @@ export function MinuteEventChart({eventData}:data) {
                     className="cursor-pointer hover:opacity-80"
                   />
                   <title>
-                    {`${event.type.charAt(0).toUpperCase() + event.type.slice(1)}\nTime: ${event.hour}:${event.startMinute.toString().padStart(2, "0")} - ${event.hour}:${event.endMinute.toString().padStart(2, "0")}\nDuration: ${event.endMinute - event.startMinute} minutes`}
+                    {`${event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+Time: ${event.hour}:${event.startMinute.toFixed(1).toString().padStart(2, "0")} - ${event.hour}:${event.endMinute.toFixed(1).toString().padStart(2, "0")}
+Duration: ${( event.endMinute - event.startMinute ).toFixed(1)} minutes`}
                   </title>
                 </g>
               )
