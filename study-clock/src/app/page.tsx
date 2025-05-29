@@ -8,7 +8,8 @@ import buttonStyles from "@/app/ui/buttons.module.css";
 import { Clock } from "@/components/clock";
 import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
-import { log_break_cache,get_break_cache, create_session} from "@/components/stats";
+import { log_break_cache,get_break_cache} from "@/components/store/break";
+import { session,useStatsStore } from "@/components/store/stats";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -29,6 +30,8 @@ export default function Home() {
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
+    const {sessions,create_session,update_session} = useStatsStore()
+
     useEffect(() => {
         alarmRef.current = new Audio("/alarm.wav")
         const cache_result = get_break_cache()
@@ -55,6 +58,7 @@ export default function Home() {
         
         studyTimerRef.current = setInterval(() => {
             setStudyTime((prev) => { return recalculate({...prev,seconds:prev.seconds+1}) })
+            update_session()
         }, 1000);
     },[])
 
@@ -82,6 +86,7 @@ export default function Home() {
             if (document.activeElement != inputRef.current) {
                 setBreakTime(remainingTime)
             }
+            update_session()
         }, 1000);
     },[breakTime])
     
@@ -172,13 +177,14 @@ export default function Home() {
     }
 
     const sessionSwitch = () => {
-        create_session()
         if (state == "study") {
+            create_session("break")
             SetClockOrder("flex flex-col-reverse")
             setState("break") 
             setStudyAnim(sessionControlStyles.slideout)
             setBreakAnim(sessionControlStyles.slidein)
         }else{
+            create_session("study")
             SetClockOrder("flex flex-col")
             setState("study")
             setStudyAnim(sessionControlStyles.slidein)
@@ -187,8 +193,8 @@ export default function Home() {
     }
     
     const startStop = () => {
-        create_session()
         if (state == "homescreen") {
+            create_session("study")
             setState("study")
             setBreakAnim(sessionControlStyles.start_session_b)
             setStudyAnim(sessionControlStyles.start_session)
