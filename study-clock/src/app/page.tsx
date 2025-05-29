@@ -228,7 +228,7 @@ export default function Home() {
                     </Button>
                 </div>
             </div>
-            <MinuteEventChart/>
+            <MinuteEventChart eventData={sessions} />
         </div>
     )
 }
