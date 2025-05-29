@@ -8,7 +8,7 @@ import buttonStyles from "@/app/ui/buttons.module.css";
 import { Clock } from "@/components/clock";
 import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
-import { log_break_cache,get_break_cache} from "@/components/stats";
+import { log_break_cache,get_break_cache, create_session} from "@/components/stats";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -172,6 +172,7 @@ export default function Home() {
     }
 
     const sessionSwitch = () => {
+        create_session()
         if (state == "study") {
             SetClockOrder("flex flex-col-reverse")
             setState("break") 
@@ -186,6 +187,7 @@ export default function Home() {
     }
     
     const startStop = () => {
+        create_session()
         if (state == "homescreen") {
             setState("study")
             setBreakAnim(sessionControlStyles.start_session_b)
