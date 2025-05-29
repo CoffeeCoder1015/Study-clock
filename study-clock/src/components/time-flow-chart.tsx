@@ -51,7 +51,7 @@ const eventData = [
 export function MinuteEventChart() {
   const chartWidth = 800
   const chartHeight = 400
-  const margin = { top: 20, right: 30, bottom: 80, left: 90 }
+  const margin = { top: 30, right: 20, bottom: 55, left: 65 }
   const plotWidth = chartWidth - margin.left - margin.right
   const plotHeight = chartHeight - margin.top - margin.bottom
 
@@ -59,7 +59,7 @@ export function MinuteEventChart() {
   const getBlockPosition = (hour: number, startMinute: number, endMinute: number) => {
     const x = (hour / 23) * plotWidth
     const y = plotHeight - (endMinute / 60) * plotHeight
-    const width = (plotWidth / 24) * 0.8 // 80% of hour width
+    const width = (plotWidth / 24) *1.05 // 80% of hour width
     const height = ((endMinute - startMinute) / 60) * plotHeight
 
     return { x, y, width, height }
@@ -70,7 +70,7 @@ export function MinuteEventChart() {
   }
 
   return (
-    <Card className="w-full">
+    <Card className="bg-black text-white">
       <CardHeader>
         <CardTitle>Event Duration Timeline</CardTitle>
         <CardDescription>Events shown as blocks spanning from start to end time (Y-axis: 0-60 minutes)</CardDescription>

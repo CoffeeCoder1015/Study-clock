@@ -7,6 +7,7 @@ import sessionControlStyles from "@/app/ui/session.controls.module.css";
 import buttonStyles from "@/app/ui/buttons.module.css";
 import { Clock } from "@/components/clock";
 import { Button } from "@/components/ui/button";
+import { MinuteEventChart } from "@/components/time-flow-chart";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -214,6 +215,7 @@ export default function Home() {
                     </Button>
                 </div>
             </div>
+            <MinuteEventChart/>
         </div>
     )
 }
