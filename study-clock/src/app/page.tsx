@@ -208,6 +208,7 @@ export default function Home() {
     
     return (
         <div className={homeStyles.main}>
+            <MinuteEventChart eventData={sessions} />
             <div>
                 <div className={clockOrder}>
                     <Clock label="Study 📝" time={studyTime} className={studyAnim} />
@@ -228,7 +229,6 @@ export default function Home() {
                     </Button>
                 </div>
             </div>
-            <MinuteEventChart eventData={sessions} />
         </div>
     )
 }
