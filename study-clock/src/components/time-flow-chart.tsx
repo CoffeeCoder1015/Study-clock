@@ -1,51 +1,52 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { session  } from "@/components/store/stats";
 
 // Sample data: each event has start and end times
 const eventData = [
   // Hour 0
-  { hour: 0, startMinute: 5, endMinute: 12, type: "desktop", id: "d1" },
-  { hour: 0, startMinute: 15, endMinute: 25, type: "mobile", id: "m1" },
-  { hour: 0, startMinute: 42, endMinute: 48, type: "desktop", id: "d2" },
-  { hour: 0, startMinute: 50, endMinute: 58, type: "mobile", id: "m2" },
+  { hour: 0, startMinute: 5, endMinute: 12, type: "break", id: "d1" },
+  { hour: 0, startMinute: 15, endMinute: 25, type: "study", id: "m1" },
+  { hour: 0, startMinute: 42, endMinute: 48, type: "break", id: "d2" },
+  { hour: 0, startMinute: 50, endMinute: 58, type: "study", id: "m2" },
 
   // Hour 1
-  { hour: 1, startMinute: 7, endMinute: 20, type: "desktop", id: "d3" },
-  { hour: 1, startMinute: 23, endMinute: 35, type: "mobile", id: "m3" },
-  { hour: 1, startMinute: 40, endMinute: 55, type: "desktop", id: "d4" },
+  { hour: 1, startMinute: 7, endMinute: 20, type: "break", id: "d3" },
+  { hour: 1, startMinute: 23, endMinute: 35, type: "study", id: "m3" },
+  { hour: 1, startMinute: 40, endMinute: 55, type: "break", id: "d4" },
 
   // Hour 2
-  { hour: 2, startMinute: 5, endMinute: 18, type: "mobile", id: "m4" },
-  { hour: 2, startMinute: 25, endMinute: 40, type: "desktop", id: "d5" },
-  { hour: 2, startMinute: 45, endMinute: 58, type: "mobile", id: "m5" },
+  { hour: 2, startMinute: 5, endMinute: 18, type: "study", id: "m4" },
+  { hour: 2, startMinute: 25, endMinute: 40, type: "break", id: "d5" },
+  { hour: 2, startMinute: 45, endMinute: 58, type: "study", id: "m5" },
 
   // Hour 3
-  { hour: 3, startMinute: 2, endMinute: 15, type: "mobile", id: "m6" },
-  { hour: 3, startMinute: 18, endMinute: 30, type: "desktop", id: "d6" },
-  { hour: 3, startMinute: 35, endMinute: 45, type: "mobile", id: "m7" },
-  { hour: 3, startMinute: 48, endMinute: 59, type: "desktop", id: "d7" },
+  { hour: 3, startMinute: 2, endMinute: 15, type: "study", id: "m6" },
+  { hour: 3, startMinute: 18, endMinute: 30, type: "break", id: "d6" },
+  { hour: 3, startMinute: 35, endMinute: 45, type: "study", id: "m7" },
+  { hour: 3, startMinute: 48, endMinute: 59, type: "break", id: "d7" },
 
   // Hour 4
-  { hour: 4, startMinute: 8, endMinute: 22, type: "desktop", id: "d8" },
-  { hour: 4, startMinute: 25, endMinute: 40, type: "mobile", id: "m8" },
-  { hour: 4, startMinute: 45, endMinute: 55, type: "desktop", id: "d9" },
+  { hour: 4, startMinute: 8, endMinute: 22, type: "break", id: "d8" },
+  { hour: 4, startMinute: 25, endMinute: 40, type: "study", id: "m8" },
+  { hour: 4, startMinute: 45, endMinute: 55, type: "break", id: "d9" },
 
   // Hour 5
-  { hour: 5, startMinute: 3, endMinute: 18, type: "mobile", id: "m9" },
-  { hour: 5, startMinute: 25, endMinute: 45, type: "desktop", id: "d10" },
-  { hour: 5, startMinute: 50, endMinute: 59, type: "mobile", id: "m10" },
+  { hour: 5, startMinute: 3, endMinute: 18, type: "study", id: "m9" },
+  { hour: 5, startMinute: 25, endMinute: 45, type: "break", id: "d10" },
+  { hour: 5, startMinute: 50, endMinute: 59, type: "study", id: "m10" },
 
   // More hours
-  { hour: 8, startMinute: 10, endMinute: 25, type: "desktop", id: "d11" },
-  { hour: 8, startMinute: 30, endMinute: 50, type: "mobile", id: "m11" },
-  { hour: 9, startMinute: 15, endMinute: 35, type: "desktop", id: "d12" },
-  { hour: 10, startMinute: 20, endMinute: 45, type: "mobile", id: "m12" },
-  { hour: 12, startMinute: 5, endMinute: 30, type: "desktop", id: "d13" },
-  { hour: 12, startMinute: 35, endMinute: 55, type: "mobile", id: "m13" },
-  { hour: 14, startMinute: 10, endMinute: 40, type: "mobile", id: "m14" },
-  { hour: 16, startMinute: 20, endMinute: 50, type: "desktop", id: "d14" },
-  { hour: 18, startMinute: 5, endMinute: 25, type: "mobile", id: "m15" },
-  { hour: 20, startMinute: 30, endMinute: 55, type: "desktop", id: "d15" },
+  { hour: 8, startMinute: 10, endMinute: 25, type: "break", id: "d11" },
+  { hour: 8, startMinute: 30, endMinute: 50, type: "study", id: "m11" },
+  { hour: 9, startMinute: 15, endMinute: 35, type: "break", id: "d12" },
+  { hour: 10, startMinute: 20, endMinute: 45, type: "study", id: "m12" },
+  { hour: 12, startMinute: 5, endMinute: 30, type: "break", id: "d13" },
+  { hour: 12, startMinute: 35, endMinute: 55, type: "study", id: "m13" },
+  { hour: 14, startMinute: 10, endMinute: 40, type: "study", id: "m14" },
+  { hour: 16, startMinute: 20, endMinute: 50, type: "break", id: "d14" },
+  { hour: 18, startMinute: 5, endMinute: 25, type: "study", id: "m15" },
+  { hour: 20, startMinute: 30, endMinute: 55, type: "break", id: "d15" },
 ]
 
 export function MinuteEventChart() {
@@ -66,7 +67,7 @@ export function MinuteEventChart() {
   }
 
   const getColor = (type: string) => {
-    return type === "desktop" ? "#10b981" : "#3b82f6"
+    return type === "break" ? "#10b981" : "#3b82f6"
   }
 
   return (
@@ -175,11 +176,11 @@ export function MinuteEventChart() {
           <div className="flex items-center gap-6 mt-4">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-green-500 rounded"></div>
-              <span className="text-sm">Desktop Events</span>
+              <span className="text-sm">break Events</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              <span className="text-sm">Mobile Events</span>
+              <span className="text-sm">study Events</span>
             </div>
           </div>
         </div>
