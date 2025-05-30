@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect, Dispatch, SetStateAction, useCallback, } from "react"
+import { useState, useRef, useEffect, useCallback, } from "react"
 
 import homeStyles from "@/app/ui/home.module.css";
 import sessionControlStyles from "@/app/ui/session.controls.module.css";
@@ -9,7 +9,7 @@ import { Clock } from "@/components/clock";
 import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
 import { log_break_cache,get_break_cache} from "@/components/store/break";
-import { session,useStatsStore } from "@/components/store/stats";
+import { useStatsStore } from "@/components/store/stats";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
-    const { today, create_session, update_session } = useStatsStore()
+    const { today, create_session, update_session, get_stats} = useStatsStore()
 
     useEffect(() => {
         alarmRef.current = new Audio("/alarm.wav")
@@ -208,10 +208,7 @@ export default function Home() {
     
     return (
         <div className={homeStyles.main}>
-            <MinuteEventChart  sessions={today.sessions}
-            max_study={today.max_study} max_break={today.max_break} 
-            current_study={today.current_study} current_break={today.current_break}
-            previous_study={today.previous_study} previous_break={today.previous_break} />
+            {MinuteEventChart(today,get_stats)}
             <div>
                 <div className={clockOrder}>
                     <Clock label="Study 📝" time={studyTime} className={studyAnim} />

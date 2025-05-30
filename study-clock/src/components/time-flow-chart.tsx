@@ -1,9 +1,9 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { dayStats, session  } from "@/components/store/stats";
-import { TrendingUp, TrendingDown, TrendingDownIcon} from "lucide-react";
+import { dayStats, get_key, key} from "@/components/store/stats";
+import { TrendingUp, TrendingDown} from "lucide-react";
 import { DatePicker } from "./date-picker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // stats for comparing with previous sessions
 function comparison_with_previous(label: string,current: number, previous: number) {
@@ -21,8 +21,7 @@ function comparison_with_previous(label: string,current: number, previous: numbe
 	)
 }
 
-
-export function MinuteEventChart(ingestData:dayStats) {
+export function MinuteEventChart(ingestData:dayStats,getter:(date:key) => dayStats) {
   const chartWidth = 800
   const chartHeight = 400
   const margin = { top: 30, right: 20, bottom: 55, left: 65 }
@@ -43,7 +42,12 @@ export function MinuteEventChart(ingestData:dayStats) {
     return type === "break" ? "#10b981" : "#3b82f6"
   }
 
+  const [stats, setStats] = useState(ingestData)
   const [date, setDate] = useState<Date | undefined>((new Date()))
+
+  useEffect(() => {
+    setStats(getter(get_key(date)))
+  }, [date, ingestData])
 
   return (
     <Card className="bg-black text-white">
@@ -101,7 +105,7 @@ export function MinuteEventChart(ingestData:dayStats) {
             ))}
 
             {/* Event blocks */}
-            {ingestData.sessions.map((event,idx) => {
+            {stats.sessions.map((event,idx) => {
               const { x, y, width, height } = getBlockPosition(event.hour, event.startMinute, event.endMinute)
               return (
                 <g key={idx}>
@@ -164,8 +168,8 @@ Duration: ${( event.endMinute - event.startMinute ).toFixed(1)} minutes`}
       </CardContent>
       <CardFooter>
         <div className="flex gap-10 text-sm text-muted-foreground">
-			{comparison_with_previous("Study time",ingestData.current_study,ingestData.previous_study)}
-			{comparison_with_previous("Break time",ingestData.current_break,ingestData.previous_break)}
+			{comparison_with_previous("Study time",stats.current_study,stats.previous_study)}
+			{comparison_with_previous("Break time",stats.current_break,stats.previous_break)}
         </div>
       </CardFooter>
     </Card>

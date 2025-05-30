@@ -25,13 +25,13 @@ export interface session{
     endMinute: number
 }
 
-interface key{
+export interface key{
     year: number
     month: number
     date: number
 }
 
-function get_key(date:Date = new Date()) {
+export function get_key(date:Date = new Date()) {
     const key:key = {
         year:date.getFullYear(),
         month:date.getMonth()+1,
