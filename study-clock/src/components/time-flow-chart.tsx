@@ -2,6 +2,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { dayStats, session  } from "@/components/store/stats";
 import { TrendingUp, TrendingDown, TrendingDownIcon} from "lucide-react";
+import { DatePicker } from "./date-picker";
 
 // stats for comparing with previous sessions
 function comparison_with_previous(label: string,current: number, previous: number) {
@@ -44,7 +45,7 @@ export function MinuteEventChart(ingestData:dayStats) {
   return (
     <Card className="bg-black text-white">
       <CardHeader>
-        <CardTitle>Event Duration Timeline</CardTitle>
+        <CardTitle>Event Duration Timeline  <DatePicker/> </CardTitle>
         <CardDescription>Events shown as blocks spanning from start to end time (Y-axis: 0-60 minutes)</CardDescription>
       </CardHeader>
       <CardContent>
