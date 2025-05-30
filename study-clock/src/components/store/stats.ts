@@ -204,7 +204,11 @@ export const useStatsStore = create<statsStore>()(
             get_archive: (date: key) => {
                 const archive = get().archive
                 const strkey = JSON.stringify(date)
-                return archive[strkey] 
+                const return_obj = archive[strkey]
+                if (return_obj == null) {
+                    return empty_today() 
+                }
+                return return_obj
             }
 
         }),
