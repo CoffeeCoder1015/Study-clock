@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
 import { log_break_cache,get_break_cache} from "@/components/store/break";
 import { useStatsStore } from "@/components/store/stats";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabsContent } from "@radix-ui/react-tabs";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -208,23 +210,33 @@ export default function Home() {
     
     return (
         <div className={homeStyles.main}>
-            {MinuteEventChart(today,get_stats)}
             <div>
-                <div className={clockOrder}>
-                    <Clock label="Study 📝" time={studyTime} className={studyAnim} />
-                    <Clock label="Break 🥳" time={breakTime} className={breakAnim} isBreakTimer
-                        value={inputValue}
-                        onKeyDown={handleKeyDown}
-                        onBlur={handleOnBlur}
-                        onChange={handleInputChange}
-                        ref={inputRef}
-                    />
-                </div>
+                <Tabs defaultValue="clock">
+                    <TabsList>
+                        <TabsTrigger value="clock">Clock</TabsTrigger>
+                        <TabsTrigger value="stats">Stats</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="clock">
+                        <div className={clockOrder}>
+                            <Clock label="Study 📝" time={studyTime} className={studyAnim} />
+                            <Clock label="Break 🥳" time={breakTime} className={breakAnim} isBreakTimer
+                                value={inputValue}
+                                onKeyDown={handleKeyDown}
+                                onBlur={handleOnBlur}
+                                onChange={handleInputChange}
+                                ref={inputRef}
+                            />
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="stats">
+                        {MinuteEventChart(today, get_stats)}
+                    </TabsContent>
+                </Tabs>
                 <div className="relative z-10">
                     {state != "homescreen" && <Button onClick={sessionSwitch} className={`${buttonStyles.control_btn} block`}>
                         {state == "study" ? "Break 🥳" : "Study 📝"}
                     </Button>}
-                    <Button onClick={startStop} className={`${buttonStyles.control_btn} ${state=="homescreen" && buttonStyles.start} block`}>
+                    <Button onClick={startStop} className={`${buttonStyles.control_btn} ${state == "homescreen" && buttonStyles.start} block`}>
                         {state == "homescreen" ? "Start!" : "End!"}
                     </Button>
                 </div>
