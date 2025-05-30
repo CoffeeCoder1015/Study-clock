@@ -81,6 +81,12 @@ function create_session(type:string) {
 
 type statsStore = {
     sessions: session[],
+    max_study: number,
+    max_break: number,
+    previous_study: number,
+    previous_break: number,
+    current_study: number,
+    current_break: number,
     create_session: (type:string) => void
     update_session: () => void
 }
@@ -89,16 +95,52 @@ export const useStatsStore = create<statsStore>()(
     persist(
         (set,get) => ({
             sessions:[],
+            max_study: 0,
+            max_break: 0,
+            previous_study: 0,
+            previous_break: 0,
+            current_study: 0,
+            current_break: 0,
             create_session: (type:string) => {
                 const s = create_session(type)
-                set({sessions:[...get().sessions,s]})
+                if (type == "study") {
+                    set({sessions:[...get().sessions,s],
+                        previous_break:get().current_break,
+                        current_break:0
+                    })
+                }else{
+                    set({sessions:[...get().sessions,s],
+                        previous_study:get().current_study,
+                        current_study:0
+                    })
+                }
             },
             update_session: () => {
                 const old = get().sessions
                 const lidx = old.length-1
                 const last = old[ lidx ]
                 const sx = updateSession(last)
-                set({sessions:[...old.slice(0,lidx),...sx]})
+                if (last.type == "study") {
+                    var max = get().max_study
+                    const new_study  = get().current_study+1
+                    if (new_study>max) {
+                       max = new_study 
+                    }
+                    set({sessions:[...old.slice(0,lidx),...sx],
+                        current_study:new_study,
+                        max_study:max
+                    })
+                }else{
+                    var max = get().max_break
+                    const new_break  = get().current_break+1
+                    if (new_break>max) {
+                       max = new_break 
+                    }
+                    set({sessions:[...old.slice(0,lidx),...sx],
+                        current_break:new_break,
+                        max_break:max
+                    })
+                }
             }
         }),
         {
