@@ -1,12 +1,36 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { session  } from "@/components/store/stats";
+import { TrendingUp, TrendingDown, TrendingDownIcon} from "lucide-react";
 
 interface data{
   eventData: session[]  
+  max_study: number,
+  max_break: number,
+  previous_study: number,
+  previous_break: number,
+  current_study: number,
+  current_break: number,
 }
 
-export function MinuteEventChart({eventData}:data) {
+// stats for comparing with previous sessions
+function comparison_with_previous(label: string,current: number, previous: number) {
+	const larger = current > previous
+	var change = Math.abs( previous - current ) / previous * 100
+	if (previous === 0 && current === 0) {
+		change = 0	
+	}
+	const qualitative = larger ? "Increased" : "decreased"
+	const TrendIcon = larger ? TrendingUp: TrendingDown
+	return (
+		<div className="flex items-center gap-2 leading-none font-medium">
+			{label} has {qualitative} by {change.toFixed(1)}% from last time  <TrendIcon className="h-4 w-4"/>
+		</div>
+	)
+}
+
+
+export function MinuteEventChart(ingestData:data) {
   const chartWidth = 800
   const chartHeight = 400
   const margin = { top: 30, right: 20, bottom: 55, left: 65 }
@@ -83,7 +107,7 @@ export function MinuteEventChart({eventData}:data) {
             ))}
 
             {/* Event blocks */}
-            {eventData.map((event,idx) => {
+            {ingestData.eventData.map((event,idx) => {
               const { x, y, width, height } = getBlockPosition(event.hour, event.startMinute, event.endMinute)
               return (
                 <g key={idx}>
@@ -146,7 +170,8 @@ Duration: ${( event.endMinute - event.startMinute ).toFixed(1)} minutes`}
       </CardContent>
       <CardFooter>
         <div className="text-sm text-muted-foreground">
-          🦶
+			{comparison_with_previous("Break time",ingestData.current_break,ingestData.previous_break)}
+			{comparison_with_previous("Study time",ingestData.current_study,ingestData.previous_study)}
         </div>
       </CardFooter>
     </Card>

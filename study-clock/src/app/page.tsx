@@ -30,7 +30,7 @@ export default function Home() {
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
-    const {sessions,create_session,update_session} = useStatsStore()
+    const { sessions, max_study, max_break, current_study, current_break, previous_study, previous_break, create_session, update_session } = useStatsStore()
 
     useEffect(() => {
         alarmRef.current = new Audio("/alarm.wav")
@@ -208,7 +208,10 @@ export default function Home() {
     
     return (
         <div className={homeStyles.main}>
-            <MinuteEventChart eventData={sessions} />
+            <MinuteEventChart eventData={sessions}
+            max_study={max_study} max_break={max_break} 
+            current_study={current_study} current_break={current_break}
+            previous_study={previous_study} previous_break={previous_break} />
             <div>
                 <div className={clockOrder}>
                     <Clock label="Study 📝" time={studyTime} className={studyAnim} />
