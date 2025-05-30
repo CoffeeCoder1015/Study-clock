@@ -229,19 +229,19 @@ export default function Home() {
                                 ref={inputRef}
                             />
                         </div>
+                        <div className="relative z-10">
+                            {state != "homescreen" && <Button onClick={sessionSwitch} className={`${buttonStyles.control_btn} block`}>
+                                {state == "study" ? "Break 🥳" : "Study 📝"}
+                            </Button>}
+                            <Button onClick={startStop} className={`${buttonStyles.control_btn} ${state == "homescreen" && buttonStyles.start} block`}>
+                                {state == "homescreen" ? "Start!" : "End!"}
+                            </Button>
+                        </div>
                     </TabsContent>
                     <TabsContent value="stats">
                         {MinuteEventChart(today, get_stats)}
                     </TabsContent>
                 </Tabs>
-                <div className="relative z-10">
-                    {state != "homescreen" && <Button onClick={sessionSwitch} className={`${buttonStyles.control_btn} block`}>
-                        {state == "study" ? "Break 🥳" : "Study 📝"}
-                    </Button>}
-                    <Button onClick={startStop} className={`${buttonStyles.control_btn} ${state == "homescreen" && buttonStyles.start} block`}>
-                        {state == "homescreen" ? "Start!" : "End!"}
-                    </Button>
-                </div>
             </div>
         </div>
     )
