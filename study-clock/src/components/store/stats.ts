@@ -109,6 +109,10 @@ function empty_today(){
     }
 }
 
+function cmp_key(key1:key, key2:key){
+    return key1.year === key2.year && key1.month === key2.month && key1.date === key2.date
+}
+
 export const useStatsStore = create<statsStore>()(
     persist(
         (set,get) => ({
@@ -116,7 +120,8 @@ export const useStatsStore = create<statsStore>()(
             today: empty_today(),
             archive:{},
             create_session: (type:string) => {
-                if (get().timestamp != get_key()) {
+                if (!cmp_key(get().timestamp,get_key())) {
+                    console.log(get().timestamp)
                     get().archive_today()
                 }
 
@@ -143,7 +148,8 @@ export const useStatsStore = create<statsStore>()(
                 }
             },
             update_session: () => {
-                if (get().timestamp != get_key()) {
+                if (!cmp_key(get().timestamp,get_key())) {
+                    console.log(get().timestamp,get_key())
                     const old = get().today
                     const old_sess = old.sessions
                     get().archive_today()
