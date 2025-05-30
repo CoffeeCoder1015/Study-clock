@@ -143,15 +143,17 @@ export const useStatsStore = create<statsStore>()(
                 }
             },
             update_session: () => {
+                if (get().timestamp != get_key()) {
+                    const old = get().today
+                    const old_sess = old.sessions
+                    get().archive_today()
+                    get().create_session(old_sess[ old_sess.length-1 ].type)
+                }
                 const old = get().today
                 const old_sess = old.sessions
                 const lidx = old_sess.length-1
                 const last = old_sess[ lidx ]
                 const sx = updateSession(last)
-                if (get().timestamp != get_key()) {
-                    get().archive_today()
-                    get().create_session(last.type)
-                }
                 if (last.type == "study") {
                     var max = get().today.max_study
                     const new_study  = get().today.current_study+1
