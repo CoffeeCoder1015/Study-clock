@@ -27,7 +27,7 @@ export function DatePicker({date,setDate}:datePickerGetSet) {
                     variant={"outline"}
                     className={cn(
                         "w-[280px] justify-start text-left font-normal",
-                        buttonStyles.date_pick_btn,
+                        buttonStyles.general_btn,
                         !date && "text-muted-foreground"
                     )}
                 >

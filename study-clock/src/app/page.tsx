@@ -213,9 +213,9 @@ export default function Home() {
             <div>
                 <Tabs defaultValue="clock">
                     <div className="w-full flex flex-row items-center justify-center dark z-10">
-                        <TabsList>
-                            <TabsTrigger value="stats">Stats</TabsTrigger>
-                            <TabsTrigger value="clock">Clock</TabsTrigger>
+                        <TabsList className="bg-[rgb(29,36,43)]">
+                            <TabsTrigger className={buttonStyles.tab_btn} value="stats">Stats</TabsTrigger>
+                            <TabsTrigger className={buttonStyles.tab_btn} value="clock">Clock</TabsTrigger>
                         </TabsList>
                     </div>
                     <TabsContent value="clock">
