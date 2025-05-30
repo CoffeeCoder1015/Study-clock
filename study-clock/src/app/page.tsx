@@ -212,10 +212,12 @@ export default function Home() {
         <div className={homeStyles.main}>
             <div>
                 <Tabs defaultValue="clock">
-                    <TabsList>
-                        <TabsTrigger value="clock">Clock</TabsTrigger>
-                        <TabsTrigger value="stats">Stats</TabsTrigger>
-                    </TabsList>
+                    <div className="w-full flex flex-row items-center justify-center">
+                        <TabsList>
+                            <TabsTrigger value="stats">Stats</TabsTrigger>
+                            <TabsTrigger value="clock">Clock</TabsTrigger>
+                        </TabsList>
+                    </div>
                     <TabsContent value="clock">
                         <div className={clockOrder}>
                             <Clock label="Study 📝" time={studyTime} className={studyAnim} />
