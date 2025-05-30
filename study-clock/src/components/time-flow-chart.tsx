@@ -169,9 +169,9 @@ Duration: ${( event.endMinute - event.startMinute ).toFixed(1)} minutes`}
         </div>
       </CardContent>
       <CardFooter>
-        <div className="text-sm text-muted-foreground">
-			{comparison_with_previous("Break time",ingestData.current_break,ingestData.previous_break)}
+        <div className="flex gap-10 text-sm text-muted-foreground">
 			{comparison_with_previous("Study time",ingestData.current_study,ingestData.previous_study)}
+			{comparison_with_previous("Break time",ingestData.current_break,ingestData.previous_break)}
         </div>
       </CardFooter>
     </Card>
