@@ -1,17 +1,7 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { session  } from "@/components/store/stats";
+import { dayStats, session  } from "@/components/store/stats";
 import { TrendingUp, TrendingDown, TrendingDownIcon} from "lucide-react";
-
-interface data{
-  eventData: session[]  
-  max_study: number,
-  max_break: number,
-  previous_study: number,
-  previous_break: number,
-  current_study: number,
-  current_break: number,
-}
 
 // stats for comparing with previous sessions
 function comparison_with_previous(label: string,current: number, previous: number) {
@@ -30,7 +20,7 @@ function comparison_with_previous(label: string,current: number, previous: numbe
 }
 
 
-export function MinuteEventChart(ingestData:data) {
+export function MinuteEventChart(ingestData:dayStats) {
   const chartWidth = 800
   const chartHeight = 400
   const margin = { top: 30, right: 20, bottom: 55, left: 65 }
@@ -107,7 +97,7 @@ export function MinuteEventChart(ingestData:data) {
             ))}
 
             {/* Event blocks */}
-            {ingestData.eventData.map((event,idx) => {
+            {ingestData.sessions.map((event,idx) => {
               const { x, y, width, height } = getBlockPosition(event.hour, event.startMinute, event.endMinute)
               return (
                 <g key={idx}>

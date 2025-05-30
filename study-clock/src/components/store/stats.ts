@@ -39,8 +39,7 @@ function get_key() {
         date:date.getDate()
     }
     
-    const store_key = JSON.stringify(key)
-    return store_key
+    return key
 }
 
 function getTimeStamp(): timestamp {
@@ -79,7 +78,7 @@ function create_session(type:string) {
 }
 
 
-type statsStore = {
+export interface dayStats{
     sessions: session[],
     max_study: number,
     max_break: number,
@@ -87,64 +86,117 @@ type statsStore = {
     previous_break: number,
     current_study: number,
     current_break: number,
+}
+
+type statsStore = {
+    timestamp: key,
+    today: dayStats,
+    archive: {[ key:string ]:dayStats},
     create_session: (type:string) => void
     update_session: () => void
+    archive_today: () => void
+}
+
+function empty_today(){
+    return {
+        sessions: [],
+        max_study: 0,
+        max_break: 0,
+        previous_study: 0,
+        previous_break: 0,
+        current_study: 0,
+        current_break: 0,
+    }
 }
 
 export const useStatsStore = create<statsStore>()(
     persist(
         (set,get) => ({
-            sessions:[],
-            max_study: 0,
-            max_break: 0,
-            previous_study: 0,
-            previous_break: 0,
-            current_study: 0,
-            current_break: 0,
+            timestamp:get_key(),
+            today: empty_today(),
+            archive:{},
             create_session: (type:string) => {
+                if (get().timestamp != get_key()) {
+                    get().archive_today()
+                }
+
                 const s = create_session(type)
+                const old = get().today
                 if (type == "study") {
-                    set({sessions:[...get().sessions,s],
-                        previous_break:get().current_break,
-                        current_break:0
+                    set({
+                        today: {
+                            ...old,
+                            sessions: [...old.sessions, s],
+                            previous_break: old.current_break,
+                            current_break: 0
+                        }
                     })
                 }else{
-                    set({sessions:[...get().sessions,s],
-                        previous_study:get().current_study,
-                        current_study:0
+                    set({
+                        today: {
+                            ...old,
+                            sessions: [...old.sessions, s],
+                            previous_study: old.current_study,
+                            current_study: 0
+                        }
                     })
                 }
             },
             update_session: () => {
-                const old = get().sessions
-                const lidx = old.length-1
-                const last = old[ lidx ]
+                const old = get().today
+                const old_sess = old.sessions
+                const lidx = old_sess.length-1
+                const last = old_sess[ lidx ]
                 const sx = updateSession(last)
+                if (get().timestamp != get_key()) {
+                    get().archive_today()
+                    get().create_session(last.type)
+                }
                 if (last.type == "study") {
-                    var max = get().max_study
-                    const new_study  = get().current_study+1
+                    var max = get().today.max_study
+                    const new_study  = get().today.current_study+1
                     if (new_study>max) {
                        max = new_study 
                     }
-                    set({sessions:[...old.slice(0,lidx),...sx],
-                        current_study:new_study,
-                        max_study:max
+                    set({
+                        today: {
+                            ...old,
+                            sessions: [...old_sess.slice(0, lidx), ...sx],
+                            current_study: new_study,
+                            max_study: max
+                        }
                     })
                 }else{
-                    var max = get().max_break
-                    const new_break  = get().current_break+1
+                    var max = get().today.max_break
+                    const new_break  = get().today.current_break+1
                     if (new_break>max) {
                        max = new_break 
                     }
-                    set({sessions:[...old.slice(0,lidx),...sx],
-                        current_break:new_break,
-                        max_break:max
+                    set({
+                        today: {
+                            ...old,
+                            sessions: [...old_sess.slice(0, lidx), ...sx],
+                            current_break: new_break,
+                            max_break: max
+                        }
                     })
                 }
+            },
+            archive_today: () => {
+                const old = get()
+                const key = JSON.stringify(old.timestamp)
+                var new_archive = get().archive
+                new_archive[key] = old.today
+                set({
+                    timestamp:get_key(),
+                    today:empty_today(),
+                    archive:new_archive
+                })
             }
+
         }),
         {
-            name:get_key()
+            name:"session_statistics"
         }
     )
 )
