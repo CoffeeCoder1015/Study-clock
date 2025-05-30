@@ -94,7 +94,7 @@ type statsStore = {
     create_session: (type:string) => void
     update_session: () => void
     archive_today: () => void
-    get_archive : (date: key) => dayStats
+    get_stats : (date: key) => dayStats
 }
 
 function empty_today(){
@@ -201,7 +201,10 @@ export const useStatsStore = create<statsStore>()(
                     archive:new_archive
                 })
             },
-            get_archive: (date: key) => {
+            get_stats: (date: key) => {
+                if (cmp_key(date,get().timestamp)){
+                    return get().today
+                }
                 const archive = get().archive
                 const strkey = JSON.stringify(date)
                 const return_obj = archive[strkey]
