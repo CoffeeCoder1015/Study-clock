@@ -50,7 +50,7 @@ export function MinuteEventChart(ingestData: dayStats, getter: (date: key) => da
 	}, [date, ingestData])
 
 	return (
-		<Card className="bg-black text-white">
+		<Card className="bg-(--stats-panel-bg) text-white">
 			<CardHeader>
 				<CardTitle>Event Duration Timeline  <DatePicker date={date} setDate={setDate} /> </CardTitle>
 				<CardDescription>Events shown as blocks spanning from start to end time (Y-axis: 0-60 minutes)</CardDescription>
