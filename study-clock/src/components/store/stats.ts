@@ -31,8 +31,7 @@ interface key{
     date: number
 }
 
-function get_key() {
-    var date = new Date()
+function get_key(date:Date = new Date()) {
     const key:key = {
         year:date.getFullYear(),
         month:date.getMonth()+1,
