@@ -2,7 +2,7 @@
 
 import buttonStyles from "@/app/ui/buttons.module.css";
 
-import * as React from "react"
+import { Dispatch, SetStateAction } from "react";
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -14,9 +14,12 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export function DatePicker() {
-    const [date, setDate] = React.useState<Date | undefined>(( new Date() ))
+export interface datePickerGetSet{
+    date: Date | undefined,
+    setDate: Dispatch<SetStateAction<Date | undefined>>
+}
 
+export function DatePicker({date,setDate}:datePickerGetSet) {
     return (
         <Popover>
             <PopoverTrigger asChild>
