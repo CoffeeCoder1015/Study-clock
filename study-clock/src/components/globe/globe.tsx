@@ -12,17 +12,19 @@ export function Globe(){
         
         const scene  = new THREE.Scene()
         const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000)
-        camera.position.z = 3
+        camera.position.z = 20
         
-        const renderer = new THREE.WebGLRenderer({alpha:true})
+        const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true})
         renderer.setClearColor(0x000000, 0)
+        renderer.setPixelRatio(window.devicePixelRatio)
         renderer.setSize(currentMount.clientWidth,currentMount.clientHeight)
         currentMount.appendChild(renderer.domElement)
 
-        const geometry = new THREE.BoxGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        const geometry = new THREE.SphereGeometry(10,50,50);
+        const material = new THREE.MeshBasicMaterial({ map:new THREE.TextureLoader().load("./earth-night.jpg") });
+        const sphere = new THREE.Mesh(geometry, material);
+        sphere.setRotationFromEuler(new THREE.Euler(0,3,0))
+        scene.add(sphere);
 
         function animate(){
             requestAnimationFrame(animate)
