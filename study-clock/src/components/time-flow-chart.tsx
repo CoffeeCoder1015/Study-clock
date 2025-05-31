@@ -21,6 +21,19 @@ function comparison_with_previous(label: string, current: number, previous: numb
 	)
 }
 
+function max_stat(label: string, stat: number) {
+	const formatTime = (num: string) => num.padStart(2, "0")
+	var hours = (stat / 3600).toFixed(0)
+	var remaining_sec = stat % 3600
+	var minutes = (remaining_sec / 60).toFixed(0)
+	remaining_sec %= 60
+	return (
+		<div>
+			Longest {label} session of today is {formatTime(hours)}:{formatTime(minutes)}:{formatTime(remaining_sec.toString())}
+		</div>
+	)
+}
+
 export function MinuteEventChart(ingestData: dayStats, getter: (date: key) => dayStats) {
 	const chartWidth = 800
 	const chartHeight = 400
@@ -168,8 +181,14 @@ Duration: ${(event.endMinute - event.startMinute).toFixed(1)} minutes`}
 			</CardContent>
 			<CardFooter>
 				<div className="flex gap-10 text-sm text-muted-foreground">
-					{comparison_with_previous("Study time", stats.current_study, stats.previous_study)}
-					{comparison_with_previous("Break time", stats.current_break, stats.previous_break)}
+					<div className="flex flex-col">
+						{comparison_with_previous("Study time", stats.current_study, stats.previous_study)}
+						{max_stat("studying", stats.max_study)}
+					</div>
+					<div className="flex flex-col">
+						{comparison_with_previous("Break time", stats.current_break, stats.previous_break)}
+						{max_stat("break", stats.max_break)}
+					</div>
 				</div>
 			</CardFooter>
 		</Card>
