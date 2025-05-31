@@ -64,7 +64,7 @@ export default function Home() {
         studyTimerRef.current = setInterval(() => {
             setStudyTime((prev) => {
                 const new_time = recalculate({ ...prev, seconds: prev.seconds + 1 }) 
-                setDynamicTitle(TitleBar({ favico: "📝", title: `Study! ${new_time.hours}:${new_time.minutes}:${new_time.seconds}` }))
+                setDynamicTitle(TitleBar({ favico: "📝", title: `Study! ${formatTime(new_time.hours)}:${formatTime(new_time.minutes)}:${formatTime(new_time.seconds)}` }))
                 return new_time
             })
             update_session()
@@ -96,7 +96,7 @@ export default function Home() {
                 setBreakTime(remainingTime)
             }
             update_session()
-            setDynamicTitle(TitleBar({ favico: "🥳", title: `Break! ${remainingTime.hours}:${remainingTime.minutes}:${remainingTime.seconds}` }))
+            setDynamicTitle(TitleBar({ favico: "🥳", title: `Break! ${formatTime(remainingTime.hours)}:${formatTime(remainingTime.minutes)}:${formatTime(remainingTime.seconds)}` }))
         }, 1000);
     },[breakTime])
     
@@ -210,6 +210,7 @@ export default function Home() {
             setStudyAnim(sessionControlStyles.start_session)
         } else {
             setState("homescreen")
+            setDynamicTitle(TitleBar({ favico:"⏳",title:"Study clock" }))
             setStudyAnim(sessionControlStyles.homescreen_state)
             setBreakAnim("")
         }
