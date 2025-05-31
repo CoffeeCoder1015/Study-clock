@@ -20,10 +20,16 @@ export function Globe(){
         renderer.setSize(currentMount.clientWidth,currentMount.clientHeight)
         currentMount.appendChild(renderer.domElement)
 
+        const light = new THREE.DirectionalLight(0xffffff, 4);
+        light.position.set(10,0,0);
+        scene.add(light);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+
         const geometry = new THREE.SphereGeometry(10,50,50);
-        const material = new THREE.MeshBasicMaterial({ map:new THREE.TextureLoader().load("./earth-night.jpg") });
+        const material = new THREE.MeshStandardMaterial({ map:new THREE.TextureLoader().load("./earth-night.jpg") });
         const sphere = new THREE.Mesh(geometry, material);
-        sphere.setRotationFromEuler(new THREE.Euler(0,3,0))
         scene.add(sphere);
 
         function animate(){

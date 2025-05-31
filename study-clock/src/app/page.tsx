@@ -14,7 +14,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { TitleBar } from "@/components/custom-title-bar";
 import { AlarmClock, ChartBar, Globe2 } from "lucide-react";
-import { Globe } from "@/components/globe/globe";
+import { Globe } from "@/components/globe";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -223,7 +223,7 @@ export default function Home() {
         <div className={homeStyles.main}>
             {dynamicTitle}
             <div>
-                <Tabs defaultValue="clock">
+                <Tabs defaultValue="globe">
                     <div className="w-full flex flex-row items-center justify-center dark z-10">
                         <TabsList className="bg-[rgb(29,36,43)]">
                             <TabsTrigger className={buttonStyles.tab_btn} value="stats"><ChartBar/> Stats</TabsTrigger>
