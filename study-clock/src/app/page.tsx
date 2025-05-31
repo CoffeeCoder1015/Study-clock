@@ -5,13 +5,14 @@ import { useState, useRef, useEffect, useCallback, } from "react"
 import homeStyles from "@/app/ui/home.module.css";
 import sessionControlStyles from "@/app/ui/session.controls.module.css";
 import buttonStyles from "@/app/ui/buttons.module.css";
-import { Clock } from "@/components/clock";
+import { Clock, formatTime } from "@/components/clock";
 import { Button } from "@/components/ui/button";
 import { MinuteEventChart } from "@/components/time-flow-chart";
 import { log_break_cache,get_break_cache} from "@/components/store/break";
 import { useStatsStore } from "@/components/store/stats";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { TitleBar } from "@/components/custom-title-bar";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -33,6 +34,8 @@ export default function Home() {
     const alarmRef = useRef<HTMLAudioElement | null>(null)
     
     const { today, create_session, update_session, get_stats} = useStatsStore()
+    
+    const [dynamicTitle,setDynamicTitle] = useState(TitleBar({ favico:"⏳",title:"Study clock" }))
 
     useEffect(() => {
         alarmRef.current = new Audio("/alarm.wav")
@@ -59,7 +62,11 @@ export default function Home() {
         }
         
         studyTimerRef.current = setInterval(() => {
-            setStudyTime((prev) => { return recalculate({...prev,seconds:prev.seconds+1}) })
+            setStudyTime((prev) => {
+                const new_time = recalculate({ ...prev, seconds: prev.seconds + 1 }) 
+                setDynamicTitle(TitleBar({ favico: "📝", title: `Study! ${new_time.hours}:${new_time.minutes}:${new_time.seconds}` }))
+                return new_time
+            })
             update_session()
         }, 1000);
     },[])
@@ -89,6 +96,7 @@ export default function Home() {
                 setBreakTime(remainingTime)
             }
             update_session()
+            setDynamicTitle(TitleBar({ favico: "🥳", title: `Break! ${remainingTime.hours}:${remainingTime.minutes}:${remainingTime.seconds}` }))
         }, 1000);
     },[breakTime])
     
@@ -210,6 +218,7 @@ export default function Home() {
     
     return (
         <div className={homeStyles.main}>
+            {dynamicTitle}
             <div>
                 <Tabs defaultValue="clock">
                     <div className="w-full flex flex-row items-center justify-center dark z-10">

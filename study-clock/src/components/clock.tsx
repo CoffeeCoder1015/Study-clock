@@ -15,8 +15,9 @@ interface TimerProps {
     ref? : RefObject<HTMLInputElement | null>
 }
 
+export const formatTime = (num: number) => num.toString().padStart(2, "0")
+
 export function Clock({ label, time, className = "", isBreakTimer = false, value ,onChange,onKeyDown,onBlur,ref}: TimerProps)  {
-    const formatTime = (num: number) => num.toString().padStart(2, "0")
     
     const handleOnClick = () => {
         ref?.current?.focus()

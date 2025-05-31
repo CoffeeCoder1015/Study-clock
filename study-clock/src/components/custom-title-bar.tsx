@@ -1,0 +1,17 @@
+interface titleProps{
+    favico: string;
+    title: string;
+}
+
+export function TitleBar({favico,title}:titleProps){
+    return (
+        <div>
+            <link id="favico" rel="icon" href={iconFavico(favico)}/>
+            <title>{title}</title>
+        </div>
+    )
+}
+
+function iconFavico(emoji:string){
+    return `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`
+}
