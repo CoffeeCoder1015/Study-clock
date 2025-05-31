@@ -13,6 +13,7 @@ import { useStatsStore } from "@/components/store/stats";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { TitleBar } from "@/components/custom-title-bar";
+import { AlarmClock, ChartBar } from "lucide-react";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -224,8 +225,8 @@ export default function Home() {
                 <Tabs defaultValue="clock">
                     <div className="w-full flex flex-row items-center justify-center dark z-10">
                         <TabsList className="bg-[rgb(29,36,43)]">
-                            <TabsTrigger className={buttonStyles.tab_btn} value="stats">Stats</TabsTrigger>
-                            <TabsTrigger className={buttonStyles.tab_btn} value="clock">Clock</TabsTrigger>
+                            <TabsTrigger className={buttonStyles.tab_btn} value="stats"><ChartBar/> Stats</TabsTrigger>
+                            <TabsTrigger className={buttonStyles.tab_btn} value="clock"><AlarmClock/> Clock</TabsTrigger>
                         </TabsList>
                     </div>
                     <TabsContent value="clock">
