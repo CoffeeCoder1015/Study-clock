@@ -13,7 +13,8 @@ import { useStatsStore } from "@/components/store/stats";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { TitleBar } from "@/components/custom-title-bar";
-import { AlarmClock, ChartBar } from "lucide-react";
+import { AlarmClock, ChartBar, Globe2 } from "lucide-react";
+import { Globe } from "@/components/globe/globe";
 
 interface time { hours: number; minutes: number; seconds: number }
 export default function Home() {
@@ -227,6 +228,7 @@ export default function Home() {
                         <TabsList className="bg-[rgb(29,36,43)]">
                             <TabsTrigger className={buttonStyles.tab_btn} value="stats"><ChartBar/> Stats</TabsTrigger>
                             <TabsTrigger className={buttonStyles.tab_btn} value="clock"><AlarmClock/> Clock</TabsTrigger>
+                            <TabsTrigger className={buttonStyles.tab_btn} value="globe"><Globe2/> Globe</TabsTrigger>
                         </TabsList>
                     </div>
                     <TabsContent value="clock">
@@ -251,6 +253,9 @@ export default function Home() {
                     </TabsContent>
                     <TabsContent value="stats">
                         {MinuteEventChart(today, get_stats)}
+                    </TabsContent>
+                    <TabsContent value="globe">
+                        <Globe/>
                     </TabsContent>
                 </Tabs>
             </div>
