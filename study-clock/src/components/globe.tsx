@@ -26,19 +26,17 @@ export function Globe(){
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         scene.add(ambientLight);
         
-        const geometry = new THREE.SphereGeometry(10, 50, 50);
-        const material = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("./globe/earth-night.jpg") });
-        const sphere = new THREE.Mesh(geometry, new THREE.ShaderMaterial());
+        const globe = new THREE.Mesh(new THREE.SphereGeometry(10, 50, 50), new THREE.ShaderMaterial());
 
         async function render() {
-            const [vertex, fragment] = await Promise.all([
+            const [vertexGlobe, fragmentGlobe] = await Promise.all([
                 fetch("./globe/vert.glsl").then(res => res.text()),
                 fetch("./globe/frag.glsl").then(res => res.text())
             ])
 
-            const shader = new THREE.ShaderMaterial({
-                vertexShader: vertex,
-                fragmentShader: fragment,
+            const shaderGlobe = new THREE.ShaderMaterial({
+                vertexShader: vertexGlobe,
+                fragmentShader: fragmentGlobe,
                 uniforms: {
                     dayTexture: {
                         value: new THREE.TextureLoader().load("./globe/earth-day.jpg")
@@ -54,14 +52,15 @@ export function Globe(){
                     }
                 }
             })
-            sphere.material = shader
-            scene.add(sphere);
+            globe.material = shaderGlobe
+            
+            scene.add(globe);
         }
         render()
 
         function animate() {
-            sphere.rotateY(1/200)
-            sphere.rotateX(1/800)
+            globe.rotateY(1/200)
+            globe.rotateX(1/800)
             requestAnimationFrame(animate)
             renderer.render(scene, camera)
         }
