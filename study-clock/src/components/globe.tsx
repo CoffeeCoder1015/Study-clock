@@ -27,11 +27,20 @@ export function Globe(){
         scene.add(ambientLight);
         
         const globe = new THREE.Mesh(new THREE.SphereGeometry(10, 50, 50), new THREE.ShaderMaterial());
+        scene.add(globe);
+        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(10, 50, 50), new THREE.ShaderMaterial());
+        atmosphere.scale.set(1.015,1.015,1.015)
+        scene.add(atmosphere);
 
         async function render() {
             const [vertexGlobe, fragmentGlobe] = await Promise.all([
                 fetch("./globe/vert.glsl").then(res => res.text()),
                 fetch("./globe/frag.glsl").then(res => res.text())
+            ])
+
+            const [vertexAtmosphere, fragmentAtmosphere] = await Promise.all([
+                fetch("./atmosphere/vert.glsl").then(res => res.text()),
+                fetch("./atmosphere/frag.glsl").then(res => res.text())
             ])
 
             const shaderGlobe = new THREE.ShaderMaterial({
@@ -54,7 +63,12 @@ export function Globe(){
             })
             globe.material = shaderGlobe
             
-            scene.add(globe);
+            const shaderAtmosphere = new THREE.ShaderMaterial({
+                vertexShader: vertexAtmosphere,
+                fragmentShader: fragmentAtmosphere,
+                transparent:true,
+            })
+            atmosphere.material = shaderAtmosphere
         }
         render()
 
