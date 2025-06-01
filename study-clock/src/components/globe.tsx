@@ -29,7 +29,6 @@ export function Globe(){
         scene.add(ambientLight);
 
         const geometry = new THREE.SphereGeometry(10, 50, 50);
-        const material = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("./globe/earth-night.jpg") });
 
         const [vertex, fragment] = await Promise.all([
             fetch("./globe/vert.glsl").then(res => res.text()),
@@ -39,6 +38,11 @@ export function Globe(){
         const shader = new THREE.ShaderMaterial({
             vertexShader: vertex,
             fragmentShader: fragment,
+            uniforms:{
+                globeTexture:{
+                    value:new THREE.TextureLoader().load("./globe/earth-night.jpg") 
+                }
+            }
         })
         console.log(vertex, fragment)
 
