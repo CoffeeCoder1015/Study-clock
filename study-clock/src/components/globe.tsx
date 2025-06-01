@@ -28,7 +28,22 @@ export function Globe(){
         scene.add(ambientLight);
 
         const geometry = new THREE.SphereGeometry(10,50,50);
-        const material = new THREE.MeshStandardMaterial({ map:new THREE.TextureLoader().load("./earth-night.jpg") });
+        const material = new THREE.MeshStandardMaterial({ map:new THREE.TextureLoader().load("./globe/earth-night.jpg") });
+
+        var vertexShader = ""
+        var fragmentShader = ""
+        Promise.all([
+            fetch("./globe/frag.glsl").then(res => res.text()),
+            fetch("./globe/vert.glsl").then(res => res.text())
+        ]).then(([vertex, fragment]) => {
+            vertexShader = vertex
+            fragmentShader = fragment
+        })
+        const shader = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+        })
+
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
