@@ -11,5 +11,6 @@ void main(){
     float intensity = dot(normalize(lightPosition),vNormal);
     vec3 diff = lightPosition-vPosition;
     float dist = sqrt(dot(diff,diff));
-    gl_FragColor = mix( texture2D(nightTexture,vertexUV),texture2D(dayTexture,vertexUV),intensity*dist/15.)+intensity/5.;
+    float blendFactor = smoothstep(-0.1, 0.1, intensity);
+    gl_FragColor = mix( texture2D(nightTexture,vertexUV),texture2D(dayTexture,vertexUV),blendFactor)+intensity/5.+ambientLightIntensity;
 }

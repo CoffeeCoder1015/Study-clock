@@ -47,10 +47,10 @@ export function Globe(){
                         value: new THREE.TextureLoader().load("./globe/earth-night.jpg")
                     },
                     lightPosition: {
-                        value: new THREE.Vector3(10, 0, 0)
+                        value: new THREE.Vector3(100, 0, 0)
                     },
                     ambientLightIntensity: {
-                        value: 0.3
+                        value: 0.06
                     }
                 }
             })
