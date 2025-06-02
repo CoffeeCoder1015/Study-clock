@@ -19,17 +19,12 @@ export function Globe(){
         renderer.setPixelRatio(window.devicePixelRatio)
         renderer.setSize(currentMount.clientWidth, currentMount.clientHeight)
         currentMount.appendChild(renderer.domElement)
-        const light = new THREE.DirectionalLight(0xffffff, 4);
-        light.position.set(10, 0, 0);
-        scene.add(light);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
-        scene.add(ambientLight);
+        const lightPosition = new THREE.Vector3(100,0,0)
+        const ambientLightIntensity = 0.06
         
         const globe = new THREE.Mesh(new THREE.SphereGeometry(10, 50, 50), new THREE.ShaderMaterial());
-        scene.add(globe);
-        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(10, 50, 50), new THREE.ShaderMaterial());
-        atmosphere.scale.set(1.015,1.015,1.015)
+        // scene.add(globe);
+        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(10*1.06, 50, 50), new THREE.ShaderMaterial());
         scene.add(atmosphere);
 
         async function render() {
@@ -54,10 +49,10 @@ export function Globe(){
                         value: new THREE.TextureLoader().load("./globe/earth-night.jpg")
                     },
                     lightPosition: {
-                        value: new THREE.Vector3(100, 0, 0)
+                        value: lightPosition
                     },
                     ambientLightIntensity: {
-                        value: 0.06
+                        value: ambientLightIntensity
                     }
                 }
             })
@@ -67,6 +62,14 @@ export function Globe(){
                 vertexShader: vertexAtmosphere,
                 fragmentShader: fragmentAtmosphere,
                 transparent:true,
+                uniforms:{
+                    lightPosition: {
+                        value: lightPosition
+                    },
+                    ambientLightIntensity: {
+                        value: ambientLightIntensity
+                    }
+                }
             })
             atmosphere.material = shaderAtmosphere
         }
