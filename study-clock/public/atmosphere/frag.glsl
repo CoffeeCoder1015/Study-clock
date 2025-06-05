@@ -33,9 +33,10 @@ float channelColoration(float dist,float cosTheta, float specificConst){
 vec3 rrgb(vec3 pos){
     vec3 F = lightPosition-pos;
     vec3 unit = normalize(F);
-    float pdotu = dot(pos,unit) + 2.;
+    float pdotu = dot(pos,unit);
     float xSqred = dot(pos,pos);
     float cosTheta = pdotu / sqrt(xSqred);
+    cosTheta+=2./sqrt(xSqred)*(0.6-dot(normalize(lightPosition),normalize(cameraPosition)));
 
     float dist = -pdotu + sqrt(pow(pdotu,2.) - xSqred + rAtmSqr);
 
@@ -54,6 +55,7 @@ vec3 rrgb(vec3 pos){
 void main(){
     // reverse halo effect
     float bloomintensity = dot(vNormal,normalize( cameraPosition ));
+    float sun_on_lignt = dot(normalize(lightPosition),normalize(cameraPosition));
     float intensity = pow(bloomintensity,4.);
     
     // general lighting
@@ -62,15 +64,20 @@ void main(){
     
     // handroll rayleigh
     vec3 lightadj = rrgb(radiusEarth*vNormal);
-    gl_FragColor = vec4(lightadj,0.7*intensity)+0.2*lightingIntensity;
+    gl_FragColor = vec4(lightadj,0.7*clamp(intensity, 0., 1. ))+0.4*lightingIntensity*-sun_on_lignt;
     
     // camera
     vec3 con = normalize( cameraPosition );
     float t = dot(con,radiusAtmosphere/2.*normalize(vNormal)); // ig its not really the radius?!
-    if(rAtmSqr - t*t >= radiusEarth*radiusEarth){
+    if(rAtmSqr - t*t - 0.9 >= radiusEarth*radiusEarth){
         float i = pow(0.5 - dot(vNormal, vec3(0,0,1.)),2.);
-        gl_FragColor = vec4(0.5,0.6,1.,1.)*gl_FragColor+lightingIntensity/4.;
-        gl_FragColor*=intensity*t/2.;    
+        vec4 blueHue = vec4(0.5,0.6,1.,1.);
+        blueHue.xyz *= lightingIntensity+gl_FragColor.xyz;
+        blueHue.xyz = clamp(blueHue.xyz,0.2,7.);
+        blueHue.w = clamp(lightingIntensity,0.3,0.7);
+        gl_FragColor = blueHue;
+        // gl_FragColor = blueHue*gl_FragColor+lightingIntensity/4.;
+        gl_FragColor*=intensity*t/2.*(1.-sun_on_lignt*0.5);    
     }
 
 
