@@ -89,7 +89,6 @@ function initScene(currentMount: HTMLDivElement) {
         const gst = getGreenwichSiderealTime(d)
         const correctedRa = (rightAscension-gst+360)%360
         const {x,y,z} = raDecToVec(-declination,-correctedRa,100);
-        console.log(x,y,z)
         lightPosition.x = x
         lightPosition.y = y
         lightPosition.z = z
@@ -97,14 +96,9 @@ function initScene(currentMount: HTMLDivElement) {
     
 
     function animate() {
-        // globe.rotateY(1 / 500)
-        // globe.rotateX(1 / 800)
         requestAnimationFrame(animate)
         const glp = globe.material.uniforms.lightPosition
         const alp = atmosphere.material.uniforms.lightPosition
-        const yAxis = new THREE.Vector3(0, 1, 0);
-        
-        // lightPosition.applyAxisAngle(yAxis, 1/200);
         
         // camera orbit
         camera.position.applyAxisAngle(new THREE.Vector3(0,1,0),1/200);
