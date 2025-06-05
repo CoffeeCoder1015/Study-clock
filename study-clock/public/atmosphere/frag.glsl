@@ -1,6 +1,10 @@
 varying vec2 vertexUV;
 varying vec3 vNormal;
-varying vec3 vPosition;
+
+uniform vec3 lightPosition;
+uniform float ambientLightIntensity;
+uniform float radiusEarth;
+uniform float radiusAtmosphere;
 
 void main(){
     float intensity = 1.-0.7*dot(vNormal,normalize( cameraPosition ));
