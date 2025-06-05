@@ -10,16 +10,6 @@ uniform float radiusAtmosphere;
 
 #define PI 3.1415926535897932384626433832795
 
-float inAtmosphereDistance(vec3 pos, vec3 positionOfInterest){
-    vec3 F = positionOfInterest-pos;
-    vec3 unit = normalize(F);
-    float xSqred = dot(pos,pos);
-    
-    float pdotu = dot(pos,unit);
-    return -pdotu + sqrt(pow(pdotu,2.) - xSqred + rAtmSqr);
-}
-
-
 float gammaCorrection(float x){
     return x*x - 0.25;
 }
@@ -28,17 +18,9 @@ float sigmoid(float x){
     return 1. / (1. + exp(-x));
 }
 
-float dmap(float x, float theta){
-    float diff = abs( PI/2. - theta );
-    // if(diff < exp(-3.*theta/x)){
-    //     return x;
-    // }
-    return -x;
-}
-
 float channelColoration(float dist,float cosTheta, float specificConst){
     float thetaSqr = pow( acos(cosTheta),2. );
-    float mappedDistance = dmap(dist,acos(cosTheta));
+    float mappedDistance = 0.5*dist*exp(-2.*cosTheta)-dist*(1.-exp(-2.*cosTheta));
     float expDec = exp(-specificConst*mappedDistance*thetaSqr);
     return gammaCorrection(sigmoid(
         expDec*pow(cosTheta,2.)
@@ -49,7 +31,7 @@ float channelColoration(float dist,float cosTheta, float specificConst){
 vec3 rrgb(vec3 pos){
     vec3 F = lightPosition-pos;
     vec3 unit = normalize(F);
-    float pdotu = dot(pos,unit);
+    float pdotu = dot(pos,unit) + 2.;
     float xSqred = dot(pos,pos);
     float cosTheta = pdotu / sqrt(xSqred);
 
@@ -59,7 +41,7 @@ vec3 rrgb(vec3 pos){
 
     vec3 rawColors = vec3(
         channelColoration(dist,cosTheta,0.21),
-        channelColoration(dist,cosTheta,0.33),
+        channelColoration(dist,cosTheta,0.43),
         channelColoration(dist,cosTheta,1.0)
     );
     
@@ -71,18 +53,14 @@ vec3 rrgb(vec3 pos){
 
 void main(){
     // reverse halo effect
-    float intensity = 1.-0.7*dot(vNormal,normalize( cameraPosition ));
-    // gl_FragColor = vec4(0.13,0.3-intensity/10.,0.5,pow(intensity,1.5));
+    float bloomintensity = dot(vNormal,normalize( cameraPosition ));
+    float intensity = pow(bloomintensity,4.);
     
     // general lighting
     vec3 lightDirection = lightPosition-vNormal*radiusAtmosphere;
     float lightingIntensity = dot(normalize(lightDirection), vNormal);
-    // gl_FragColor = vec4(1.)+lightingIntensity;
     
     // handroll rayleigh
     vec3 lightadj = rrgb(radiusEarth*vNormal);
-    gl_FragColor = vec4(lightadj,pow(intensity,1.5))+lightingIntensity/8.;
-    
-    
-    
+    gl_FragColor = vec4(lightadj,0.4*intensity)+0.1*lightingIntensity;
 }
