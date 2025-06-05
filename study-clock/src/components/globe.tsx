@@ -21,7 +21,12 @@ export function Globe(){
         currentMount.appendChild(renderer.domElement)
         const lightPosition = new THREE.Vector3(100,0,0)
         const ambientLightIntensity = 0.06
-        
+
+        const light = new THREE.DirectionalLight(0xffffff, 4);
+        light.position.set(lightPosition.x,lightPosition.y,lightPosition.z);
+        scene.add(light);
+
+
         const radiusEarth = 10;
         const radiuSAtmosphere = 1.1 * radiusEarth;
         const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 100, 50), new THREE.ShaderMaterial());

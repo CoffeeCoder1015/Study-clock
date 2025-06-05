@@ -10,7 +10,7 @@ uniform float radiusAtmosphere;
 
 #define PI 3.1415926535897932384626433832795
 
-#define orangBandThickness 0.9
+#define orangBandThickness 1.5
 
 float gammaCorrection(float x){
     return x*x - 0.25;
@@ -68,7 +68,9 @@ void main(){
     vec3 con = normalize( cameraPosition );
     float t = dot(con,radiusAtmosphere/2.*normalize(vNormal)); // ig its not really the radius?!
     if(rAtmSqr - t*t >= radiusEarth*radiusEarth){
-        gl_FragColor = vec4(1.);    
+        float i = pow(0.5 - dot(vNormal, vec3(0,0,1.)),2.);
+        gl_FragColor = vec4(0.5,0.6,1.,1.)*gl_FragColor+lightingIntensity/4.;
+        gl_FragColor*=intensity*t/2.;    
     }
 
 
