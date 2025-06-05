@@ -19,11 +19,6 @@ function initScene(currentMount: HTMLDivElement) {
     const lightPosition = new THREE.Vector3(100, 0, 0)
     const ambientLightIntensity = 0.06
 
-    const light = new THREE.DirectionalLight(0xffffff, 4);
-    light.position.set(lightPosition.x, lightPosition.y, lightPosition.z);
-    scene.add(light);
-
-
     const radiusEarth = 10;
     const radiuSAtmosphere = 1.1 * radiusEarth;
     const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 100, 50), new THREE.ShaderMaterial());
@@ -86,9 +81,16 @@ function initScene(currentMount: HTMLDivElement) {
     render()
 
     function animate() {
-        globe.rotateY(1 / 200)
-        globe.rotateX(1 / 800)
+        // globe.rotateY(1 / 200)
+        // globe.rotateX(1 / 800)
         requestAnimationFrame(animate)
+        const glp = globe.material.uniforms.lightPosition
+        const alp = atmosphere.material.uniforms.lightPosition
+        lightPosition.applyAxisAngle(new THREE.Vector3(0,1,0),1/200)
+        if (glp != undefined){
+            glp.value.set(...lightPosition)
+            alp.value.set(...lightPosition)
+        }
         renderer.render(scene, camera)
     }
     animate()
