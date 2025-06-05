@@ -23,9 +23,9 @@ export function Globe(){
         const ambientLightIntensity = 0.06
         
         const radiusEarth = 10;
-        const radiuSAtmosphere = 1.02 * radiusEarth;
+        const radiuSAtmosphere = 1.1 * radiusEarth;
         const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 50, 50), new THREE.ShaderMaterial());
-        scene.add(globe);
+        // scene.add(globe);
         const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(radiuSAtmosphere, 50, 50), new THREE.ShaderMaterial());
         scene.add(atmosphere);
 
@@ -74,7 +74,7 @@ export function Globe(){
                     radiusEarth:{
                         value: radiusEarth
                     },
-                    radiuSAtmosphere:{
+                    radiusAtmosphere:{
                         value: radiuSAtmosphere
                     }
                 }

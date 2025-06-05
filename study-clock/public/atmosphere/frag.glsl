@@ -10,6 +10,8 @@ uniform float radiusAtmosphere;
 
 #define PI 3.1415926535897932384626433832795
 
+#define orangBandThickness 0.9
+
 float gammaCorrection(float x){
     return x*x - 0.25;
 }
@@ -20,7 +22,7 @@ float sigmoid(float x){
 
 float channelColoration(float dist,float cosTheta, float specificConst){
     float thetaSqr = pow( acos(cosTheta),2. );
-    float mappedDistance = 0.5*dist*exp(-2.*cosTheta)-dist*(1.-exp(-2.*cosTheta));
+    float mappedDistance = orangBandThickness*dist*exp(-2.*cosTheta)-dist*(orangBandThickness-exp(-2.*cosTheta));
     float expDec = exp(-specificConst*mappedDistance*thetaSqr);
     return gammaCorrection(sigmoid(
         expDec*pow(cosTheta,2.)
@@ -35,8 +37,7 @@ vec3 rrgb(vec3 pos){
     float xSqred = dot(pos,pos);
     float cosTheta = pdotu / sqrt(xSqred);
 
-    float sqrr = pow(pdotu,2.) - xSqred + rAtmSqr;
-    float dist = -pdotu + sqrt(abs(sqrr));
+    float dist = -pdotu + sqrt(pow(pdotu,2.) - xSqred + rAtmSqr);
     
 
     vec3 rawColors = vec3(
