@@ -6,6 +6,18 @@ uniform float ambientLightIntensity;
 uniform float radiusEarth;
 uniform float radiusAtmosphere;
 
+#define rAtmSqr radiusAtmosphere*radiusAtmosphere
+
+float inAtmosphereDistance(vec3 pos, vec3 positionOfInterest){
+    vec3 F = positionOfInterest-atmPos;
+    vec3 unit = normalize(F);
+    float xSqred = dot(pos,pos);
+    
+    float pdotu = dot(pos,unit);
+    return -pdotu + sqrt(pow(pdotu,2.) - xSqred + rAtmSqr);
+}
+
+
 void main(){
     // reverse halo effect
     // float intensity = 1.-0.7*dot(vNormal,normalize( cameraPosition ));
