@@ -24,9 +24,9 @@ export function Globe(){
         
         const radiusEarth = 10;
         const radiuSAtmosphere = 1.1 * radiusEarth;
-        const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 50, 50), new THREE.ShaderMaterial());
-        // scene.add(globe);
-        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(radiuSAtmosphere, 50, 50), new THREE.ShaderMaterial());
+        const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 100, 50), new THREE.ShaderMaterial());
+        scene.add(globe);
+        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(radiuSAtmosphere, 160, 80), new THREE.ShaderMaterial());
         scene.add(atmosphere);
 
         async function render() {
