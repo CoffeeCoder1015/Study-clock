@@ -2,6 +2,17 @@ import { useEffect, useRef } from  "react"
 import * as THREE from "three";
 import {currentSunSats, getGreenwichSiderealTime, getSunCelestialCoords,raDecToUnitVector as raDecToVec} from "@/lib/sunpos";
 
+function latLonToCartesian(lat:number, lon:number, radius = 1) {
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lon + 180) * (Math.PI / 180);
+
+  const x = -radius * Math.sin(phi) * Math.cos(theta);
+  const z = radius * Math.sin(phi) * Math.sin(theta);
+  const y = radius * Math.cos(phi);
+
+  return new THREE.Vector3(x, y, z);
+}
+
 let canvas:HTMLCanvasElement;
 
 function initScene(currentMount: HTMLDivElement) {
@@ -9,8 +20,15 @@ function initScene(currentMount: HTMLDivElement) {
     const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000)
     camera.position.z = 20
     // eye balling prime meridian 2.0
-    camera.position.applyAxisAngle(new THREE.Vector3(0,1,0),Math.PI/2);
-    camera.rotateY(Math.PI/2);
+    const yAxis = new THREE.Vector3(0,1,0)
+    const xAxis = new THREE.Vector3(1,0,0)
+    camera.position.applyAxisAngle(yAxis,Math.PI/2);
+    camera.lookAt(new THREE.Vector3(0,0,0))
+    navigator.geolocation.getCurrentPosition((pos)=>{
+        const current = latLonToCartesian(pos.coords.latitude,pos.coords.longitude,1).multiplyScalar(20);
+        camera.position.copy(current)
+        camera.lookAt(new THREE.Vector3(0,0,0))
+    })
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
     renderer.setClearColor(0x000000, 0)
@@ -101,8 +119,8 @@ function initScene(currentMount: HTMLDivElement) {
         const alp = atmosphere.material.uniforms.lightPosition
         
         // camera orbit
-        camera.position.applyAxisAngle(new THREE.Vector3(0,1,0),1/200);
-        camera.lookAt(new THREE.Vector3(0,0,0));
+        // camera.position.applyAxisAngle(new THREE.Vector3(0,0,1),1/200);
+        // camera.lookAt(new THREE.Vector3(0,0,0))
         
         if (glp != undefined){
             glp.value.set(...lightPosition)
