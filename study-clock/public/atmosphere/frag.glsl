@@ -38,7 +38,6 @@ vec3 rrgb(vec3 pos){
     float cosTheta = pdotu / sqrt(xSqred);
 
     float dist = -pdotu + sqrt(pow(pdotu,2.) - xSqred + rAtmSqr);
-    
 
     vec3 rawColors = vec3(
         channelColoration(dist,cosTheta,0.21),
@@ -63,5 +62,14 @@ void main(){
     
     // handroll rayleigh
     vec3 lightadj = rrgb(radiusEarth*vNormal);
-    gl_FragColor = vec4(lightadj,0.4*intensity)+0.1*lightingIntensity;
+    gl_FragColor = vec4(lightadj,0.7*intensity)+0.2*lightingIntensity;
+    
+    // camera
+    vec3 con = normalize( cameraPosition );
+    float t = dot(con,radiusAtmosphere/2.*normalize(vNormal)); // ig its not really the radius?!
+    if(rAtmSqr - t*t >= radiusEarth*radiusEarth){
+        gl_FragColor = vec4(1.);    
+    }
+
+
 }
