@@ -7,6 +7,9 @@ function initScene(currentMount: HTMLDivElement) {
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(75, currentMount.clientWidth / currentMount.clientHeight, 0.1, 1000)
     camera.position.z = 20
+    // eye balling prime meridian 2.0
+    camera.position.applyAxisAngle(new THREE.Vector3(0,1,0),Math.PI/2);
+    camera.rotateY(Math.PI/2);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
     renderer.setClearColor(0x000000, 0)
@@ -23,7 +26,6 @@ function initScene(currentMount: HTMLDivElement) {
     const radiuSAtmosphere = 1.1 * radiusEarth;
     const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 100, 50), new THREE.ShaderMaterial());
     scene.add(globe);
-    globe.rotateY(-Math.PI/2);
     const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(radiuSAtmosphere, 160, 80), new THREE.ShaderMaterial());
     scene.add(atmosphere);
 
