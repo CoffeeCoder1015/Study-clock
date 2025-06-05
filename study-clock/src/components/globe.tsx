@@ -1,5 +1,6 @@
 import { useEffect, useRef } from  "react"
 import * as THREE from "three";
+import {currentSunSats, getGreenwichSiderealTime, getSunCelestialCoords,raDecToUnitVector as raDecToVec} from "@/lib/sunpos";
 
 let canvas:HTMLCanvasElement;
 
@@ -17,7 +18,6 @@ function initScene(currentMount: HTMLDivElement) {
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight)
 
     canvas = renderer.domElement;
-    // currentMount.appendChild(canvas);
 
     const lightPosition = new THREE.Vector3(100, 0, 0)
     const ambientLightIntensity = 0.06
@@ -83,13 +83,33 @@ function initScene(currentMount: HTMLDivElement) {
     }
     render()
 
+    setInterval(() => {
+        const d = new Date();
+        const {rightAscension,declination} = getSunCelestialCoords(d)
+        const gst = getGreenwichSiderealTime(d)
+        const correctedRa = (rightAscension-gst+360)%360
+        const {x,y,z} = raDecToVec(-declination,-correctedRa,100);
+        console.log(x,y,z)
+        lightPosition.x = x
+        lightPosition.y = y
+        lightPosition.z = z
+    }, 100);
+    
+
     function animate() {
-        // globe.rotateY(1 / 200)
+        // globe.rotateY(1 / 500)
         // globe.rotateX(1 / 800)
         requestAnimationFrame(animate)
         const glp = globe.material.uniforms.lightPosition
         const alp = atmosphere.material.uniforms.lightPosition
-        lightPosition.applyAxisAngle(new THREE.Vector3(0,1,0),1/200)
+        const yAxis = new THREE.Vector3(0, 1, 0);
+        
+        // lightPosition.applyAxisAngle(yAxis, 1/200);
+        
+        // camera orbit
+        camera.position.applyAxisAngle(new THREE.Vector3(0,1,0),1/200);
+        camera.lookAt(new THREE.Vector3(0,0,0));
+        
         if (glp != undefined){
             glp.value.set(...lightPosition)
             alp.value.set(...lightPosition)
