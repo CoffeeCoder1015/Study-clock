@@ -23,6 +23,7 @@ function initScene(currentMount: HTMLDivElement) {
     const radiuSAtmosphere = 1.1 * radiusEarth;
     const globe = new THREE.Mesh(new THREE.SphereGeometry(radiusEarth, 100, 50), new THREE.ShaderMaterial());
     scene.add(globe);
+    globe.rotateY(-Math.PI/2);
     const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(radiuSAtmosphere, 160, 80), new THREE.ShaderMaterial());
     scene.add(atmosphere);
 
