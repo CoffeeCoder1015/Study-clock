@@ -1,6 +1,6 @@
 import { useEffect, useRef } from  "react"
 import * as THREE from "three";
-import {currentSunSats, getGreenwichSiderealTime, getSunCelestialCoords,raDecToUnitVector as raDecToVec} from "@/lib/sunpos";
+import {getSubsolarCoordinates} from "@/lib/sunpos";
 
 function latLonToCartesian(lat:number, lon:number, radius = 1) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -103,13 +103,9 @@ function initScene(currentMount: HTMLDivElement) {
 
     setInterval(() => {
         const d = new Date();
-        const {rightAscension,declination} = getSunCelestialCoords(d)
-        const gst = getGreenwichSiderealTime(d)
-        const correctedRa = (rightAscension-gst+360)%360
-        const {x,y,z} = raDecToVec(-declination,-correctedRa,100);
-        lightPosition.x = x
-        lightPosition.y = y
-        lightPosition.z = z
+        const [longitude, latitude] = getSubsolarCoordinates(d);
+        const pos = latLonToCartesian(latitude,longitude-180).multiplyScalar(100)
+        lightPosition.copy(pos)
     }, 100);
     
 
