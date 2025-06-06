@@ -34,6 +34,7 @@ export default function Home() {
     const [studyAnim, setStudyAnim] = useState(sessionControlStyles.homescreen_state)
     
     const alarmRef = useRef<HTMLAudioElement | null>(null)
+    const [ activeAlarms, setAlarms ] = useState<NodeJS.Timeout[]>([])
     
     const { today, create_session, update_session, get_stats} = useStatsStore()
     
@@ -83,9 +84,14 @@ export default function Home() {
         breakTimerRef.current = setInterval(() => {
             if (remainingTime.hours == 0 && remainingTime.minutes == 0 && remainingTime.seconds == 0) {
                 if (alarmRef.current) {
-                    for (let i = 0; i < 5; i++) {
-                        setTimeout(() => alarmRef.current?.play(), i * 1000)
+                    for (var i = 0; i < 5; i ++){
+                        const to = setTimeout(() => {
+                            alarmRef.current?.play()
+                        }, i*1000*alarmRef.current.duration*1.2);
+
+                        activeAlarms.push(to)
                     }
+                    setAlarms(activeAlarms)
                 }
                 if (breakTimerRef.current) {
                    clearInterval(breakTimerRef.current) 
@@ -195,6 +201,8 @@ export default function Home() {
             setStudyAnim(sessionControlStyles.slideout)
             setBreakAnim(sessionControlStyles.slidein)
         }else{
+            activeAlarms  && clearAlarms(activeAlarms)
+            setAlarms([])
             create_session("study")
             SetClockOrder("flex flex-col")
             setState("study")
@@ -210,6 +218,8 @@ export default function Home() {
             setBreakAnim(sessionControlStyles.start_session_b)
             setStudyAnim(sessionControlStyles.start_session)
         } else {
+            activeAlarms  && clearAlarms(activeAlarms)
+            setAlarms([])
             setState("homescreen")
             setDynamicTitle(TitleBar({ favico:"⏳",title:"Study clock" }))
             setStudyAnim(sessionControlStyles.homescreen_state)
@@ -260,4 +270,10 @@ export default function Home() {
             </div>
         </div>
     )
+}
+
+function clearAlarms(alarmSet: NodeJS.Timeout[]) {
+    for (let i = 0; i < alarmSet.length; i++) {
+        clearTimeout(alarmSet[i])
+    }
 }
