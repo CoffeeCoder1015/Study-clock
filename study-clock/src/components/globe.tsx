@@ -150,5 +150,5 @@ export function Globe(){
         }
     },[])
 
-    return ( <div ref={renderRef} className="w-2xl h-114"></div> )
+    return ( <div ref={renderRef} className="w-3xl h-130"></div> )
 }
