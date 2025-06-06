@@ -232,7 +232,7 @@ export default function Home() {
         <div className={homeStyles.main}>
             {dynamicTitle}
             <div>
-                <Tabs defaultValue="globe">
+                <Tabs defaultValue="clock">
                     <div className="w-full flex flex-row items-center justify-center dark z-10">
                         <TabsList className="bg-[rgb(29,36,43)]">
                             <TabsTrigger className={buttonStyles.tab_btn} value="stats"><ChartBar/> Stats</TabsTrigger>
