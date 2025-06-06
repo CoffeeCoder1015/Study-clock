@@ -89,7 +89,6 @@ export default function Home() {
                 }
                 if (breakTimerRef.current) {
                    clearInterval(breakTimerRef.current) 
-                    breakTimerRef.current = null
                 }
                 return
             }
