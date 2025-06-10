@@ -38,10 +38,10 @@ export default function Home() {
     
     const { today, create_session, update_session, get_stats} = useStatsStore()
     
-    const [dynamicTitle,setDynamicTitle] = useState(TitleBar({ favico:"⏳",title:"Study clock" }))
+    const [dynamicTitle,setDynamicTitle] = useState(TitleBar({ favico:"⏳",title:"⏳ Study clock" }))
 
     useEffect(() => {
-        alarmRef.current = new Audio("/alarm.wav")
+        alarmRef.current = new Audio("./alarm.wav")
         const cache_result = get_break_cache()
         setBreakCache(cache_result)
         processRawInputValue(cache_result)
@@ -67,7 +67,7 @@ export default function Home() {
         studyTimerRef.current = setInterval(() => {
             setStudyTime((prev) => {
                 const new_time = recalculate({ ...prev, seconds: prev.seconds + 1 }) 
-                setDynamicTitle(TitleBar({ favico: "📝", title: `Study! ${formatTime(new_time.hours)}:${formatTime(new_time.minutes)}:${formatTime(new_time.seconds)}` }))
+                setDynamicTitle(TitleBar({ favico: "📝", title: `📝 Study! ${formatTime(new_time.hours)}:${formatTime(new_time.minutes)}:${formatTime(new_time.seconds)}` }))
                 return new_time
             })
             update_session()
@@ -103,7 +103,7 @@ export default function Home() {
                 setBreakTime(remainingTime)
             }
             update_session()
-            setDynamicTitle(TitleBar({ favico: "🥳", title: `Break! ${formatTime(remainingTime.hours)}:${formatTime(remainingTime.minutes)}:${formatTime(remainingTime.seconds)}` }))
+            setDynamicTitle(TitleBar({ favico: "🥳", title: `🥳 Break! ${formatTime(remainingTime.hours)}:${formatTime(remainingTime.minutes)}:${formatTime(remainingTime.seconds)}` }))
         }, 1000);
     },[breakTime])
     
@@ -221,7 +221,7 @@ export default function Home() {
             activeAlarms  && clearAlarms(activeAlarms)
             setAlarms([])
             setState("homescreen")
-            setDynamicTitle(TitleBar({ favico:"⏳",title:"Study clock" }))
+            setDynamicTitle(TitleBar({ favico:"⏳",title:"⏳ Study clock" }))
             setStudyAnim(sessionControlStyles.homescreen_state)
             setBreakAnim("")
         }
