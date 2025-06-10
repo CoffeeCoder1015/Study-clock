@@ -37,7 +37,7 @@ function max_stat(label: string, stat: number) {
 export function MinuteEventChart(ingestData: dayStats, getter: (date: key) => dayStats) {
 	const chartWidth = 800
 	const chartHeight = 400
-	const margin = { top: 30, right: 20, bottom: 55, left: 65 }
+	const margin = { top: 30, right: 50, bottom: 55, left: 65 }
 	const plotWidth = chartWidth - margin.left - margin.right
 	const plotHeight = chartHeight - margin.top - margin.bottom
 
@@ -77,7 +77,7 @@ export function MinuteEventChart(ingestData: dayStats, getter: (date: key) => da
 								<line
 									x1={margin.left}
 									y1={margin.top + plotHeight - (minute / 60) * plotHeight}
-									x2={margin.left + plotWidth}
+									x2={margin.left + plotWidth * (1+1/24)}
 									y2={margin.top + plotHeight - (minute / 60) * plotHeight}
 									stroke="#e5e7eb"
 									strokeWidth="1"
@@ -95,7 +95,7 @@ export function MinuteEventChart(ingestData: dayStats, getter: (date: key) => da
 						))}
 
 						{/* X-axis grid lines and labels */}
-						{Array.from({ length: 24 }, (_, hour) => (
+						{Array.from({ length: 25 }, (_, hour) => (
 							<g key={hour}>
 								<line
 									x1={margin.left + (hour / 23) * plotWidth}
