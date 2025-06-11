@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { execFile } from 'child_process'
+import path from 'path';
 
 function getGeolocation() {
     return new Promise((resolve, reject) => {
@@ -35,12 +36,16 @@ function createWindow() {
         height: 768,
         webPreferences: {
             contextIsolation: true,
-            backgroundThrottling: false
+            backgroundThrottling: false,
+            preload: path.join(import.meta.dirname,"preload.js")
         },
     });
 
     win.loadFile("out/index.html")
-    win.loadURL("http://localhost:3000")
+
+    ipcMain.handle("get-location", async () => {
+        return await getGeolocation()
+    })
 }
 
 

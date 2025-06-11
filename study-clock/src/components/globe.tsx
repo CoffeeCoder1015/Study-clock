@@ -26,8 +26,17 @@ function initScene(currentMount: HTMLDivElement) {
     camera.lookAt(new THREE.Vector3(0,0,0))
     navigator.geolocation.getCurrentPosition((pos)=>{
         const current = latLonToCartesian(pos.coords.latitude,pos.coords.longitude,1).multiplyScalar(20);
+        console.log(pos.coords.latitude,pos.coords.longitude)
         camera.position.copy(current)
         camera.lookAt(new THREE.Vector3(0,0,0))
+    }, async () => {
+        if (window.electronAPI) {
+            const [lat,lon]: [number,number] = await window.electronAPI.getLocation()
+            console.log(lat,lon)
+            const current = latLonToCartesian(lat,lon).multiplyScalar(20);
+            camera.position.copy(current)
+            camera.lookAt(new THREE.Vector3(0,0,0))
+        }
     })
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
