@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "electron": "electron ."
+    "electron": "set NODE_ENV=development&& electron ."
   },
   "config": {
     "forge": {

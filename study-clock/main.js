@@ -2,6 +2,10 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { execFile } from 'child_process'
 import path from 'path';
 
+const isDev = process.env.NODE_ENV === 'development';
+
+const exePath = ( !isDev ? "resources/app/" : "" ) + "native_geoloc/geo_win.exe"
+
 var geoCache = null
 
 function getGeolocation() {
@@ -11,7 +15,6 @@ function getGeolocation() {
         })
     }
     return new Promise((resolve, reject) => {
-        const exePath = "native_geoloc/geo_win.exe"
         execFile(exePath, (error, stdout, stderr) => {
             if (error) {
                 return reject(error);
