@@ -1,6 +1,7 @@
 import { useEffect, useRef } from  "react"
 import * as THREE from "three";
 import {getSubsolarCoordinates} from "@/lib/sunpos";
+import {get_coords,log_coords} from "@/components/store/geoloc";
 
 function latLonToCartesian(lat:number, lon:number, radius = 1) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -24,18 +25,22 @@ function initScene(currentMount: HTMLDivElement) {
     const xAxis = new THREE.Vector3(1,0,0)
     camera.position.applyAxisAngle(yAxis,Math.PI/2);
     camera.lookAt(new THREE.Vector3(0,0,0))
-    navigator.geolocation.getCurrentPosition((pos)=>{
-        const current = latLonToCartesian(pos.coords.latitude,pos.coords.longitude,1).multiplyScalar(20);
-        console.log(pos.coords.latitude,pos.coords.longitude)
+    
+    function moveTo(lat:number, lon: number) {
+        const current = latLonToCartesian(lat, lon).multiplyScalar(20);
         camera.position.copy(current)
-        camera.lookAt(new THREE.Vector3(0,0,0))
+        camera.lookAt(new THREE.Vector3(0, 0, 0))
+    }
+    const cached = get_coords()
+    moveTo(cached.lat,cached.lon)
+    navigator.geolocation.getCurrentPosition((pos)=>{
+        log_coords(pos.coords.latitude,pos.coords.longitude)
+        moveTo(pos.coords.latitude,pos.coords.longitude)
     }, async () => {
         if (window.electronAPI) {
             const [lat,lon]: [number,number] = await window.electronAPI.getLocation()
-            console.log(lat,lon)
-            const current = latLonToCartesian(lat,lon).multiplyScalar(20);
-            camera.position.copy(current)
-            camera.lookAt(new THREE.Vector3(0,0,0))
+            log_coords(lat,lon)
+            moveTo(lat, lon)
         }
     })
 
