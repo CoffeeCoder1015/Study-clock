@@ -1,4 +1,9 @@
 import { app, BrowserWindow} from 'electron';
+import {execFile} from 'child_process'
+
+execFile("native_geoloc/geo_win.exe",(err,stdout) => {
+  console.log(stdout)
+})
 
 function createWindow() {
   const win = new BrowserWindow({

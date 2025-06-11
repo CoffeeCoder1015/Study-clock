@@ -1,0 +1,1 @@
+cl /std:c++20 /EHsc geo_win.cpp /I"%WindowsSdkDir%Include\10.0.xxxxx.0\cppwinrt" /O2 /link WindowsApp.lib
