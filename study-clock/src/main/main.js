@@ -53,7 +53,7 @@ function createWindow() {
             backgroundThrottling: false,
             preload: path.join(import.meta.dirname,"preload.js")
         },
-        icon: "icon.ico",
+        icon: "src/main/icon.ico",
     });
     win.setMenuBarVisibility(false)
 

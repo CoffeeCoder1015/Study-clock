@@ -19,7 +19,7 @@
       }
     }
   },
-  "main": "main.js",
+  "main": "src/main/main.js",
   "dependencies": {
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
