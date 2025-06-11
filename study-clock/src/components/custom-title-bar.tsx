@@ -3,11 +3,16 @@ interface titleProps{
     title: string;
 }
 
+
+function isInElectron() {
+    return window.electronAPI != undefined
+}
+
 export function TitleBar({favico,title}:titleProps){
     return (
         <div>
             <link id="favico" rel="icon" href={iconFavico(favico)}/>
-            <title>{title}</title>
+            <title>{isInElectron() ? favico+title : title}</title>
         </div>
     )
 }
