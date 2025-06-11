@@ -12,6 +12,13 @@
     "lint": "next lint",
     "electron": "electron ."
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./icon"
+      }
+    }
+  },
   "main": "main.js",
   "dependencies": {
     "@radix-ui/react-popover": "^1.1.14",
@@ -29,6 +36,8 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.8.1",
+    "@electron-forge/maker-squirrel": "^7.8.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

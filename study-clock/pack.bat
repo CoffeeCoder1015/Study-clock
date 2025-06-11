@@ -1,0 +1,1 @@
+npx electron-packager . study-clock --overwrite --platform=win32 --arch=x64 --icon=icon.ico --out bin
