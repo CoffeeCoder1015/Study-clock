@@ -2,7 +2,14 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import { execFile } from 'child_process'
 import path from 'path';
 
+var geoCache = null
+
 function getGeolocation() {
+    if ( geoCache != null ){
+        return new Promise((resolve,reject) => {
+            resolve(geoCache)
+        })
+    }
     return new Promise((resolve, reject) => {
         const exePath = "native_geoloc/geo_win.exe"
         execFile(exePath, (error, stdout, stderr) => {
@@ -22,6 +29,8 @@ function getGeolocation() {
                     return reject(new Error('Invalid coordinate output'));
                 }
 
+                geoCache = [lat,lon]
+                console.log(geoCache);
                 resolve([lat,lon]);
             } catch (e) {
                 reject(e);
@@ -29,6 +38,8 @@ function getGeolocation() {
         });
     });
 }
+
+getGeolocation()
 
 function createWindow() {
     const win = new BrowserWindow({
